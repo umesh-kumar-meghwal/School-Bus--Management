@@ -1,3 +1,5 @@
+<?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -5,15 +7,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('feest', function (Blueprint $table) {
-            $table->id();
-            $table->string('stop_name', 100)->nullable();
-            $table->integer('fee')->nullable();
+        Schema::create('login', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('password')->nullable();
+            $table->string('usertype')->nullable();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('feest');
+        Schema::dropIfExists('login');
     }
 };
