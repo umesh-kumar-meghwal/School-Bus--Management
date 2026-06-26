@@ -108,12 +108,7 @@
             type: "GET",
             dataType: "json",
             success: function(data) {
-                console.log("IP:", data.ip);
-                console.log("City:", data.city);
-                console.log("State:", data.state);
-                console.log("Country:", data.country);
-                console.log("Latitude:", data.latitude);
-                console.log("Longitude:", data.longitude);
+                console.log("Succee");
             },
             error: function(xhr) {
                 console.log(xhr.responseText);
