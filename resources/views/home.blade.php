@@ -110,9 +110,10 @@
             success: function(data) {
                 console.log("IP:", data.ip);
                 console.log("City:", data.city);
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText);
+                console.log("State:", data.state);
+                console.log("Country:", data.country);
+                console.log("Latitude:", data.latitude);
+                console.log("Longitude:", data.longitude);
             }
         })
     })
