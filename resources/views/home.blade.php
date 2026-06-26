@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-slate-50 font-sans antialiased min-h-screen flex flex-col justify-between">
 
     <!-- Header Navigation -->
@@ -34,7 +36,7 @@
 
     <!-- Main Hero Section -->
     <main class="flex-1">
-        
+
         <!-- Hero Banner -->
         <section class="max-w-6xl mx-auto px-4 py-12 md:py-20 text-center">
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200/50 mb-4">
@@ -43,8 +45,8 @@
             <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight max-w-3xl mx-auto leading-tight">
                 Bus Tracking And Fee Management Of Smart Solution
             </h1>
-           
-            
+
+
             <div class="mt-8 flex items-center justify-center gap-4">
                 <a href="/login" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all duration-150 transform hover:-translate-y-0.5">
                     Get Started Now
@@ -55,14 +57,14 @@
         <!-- Features grid section -->
         <section class="max-w-6xl mx-auto px-4 pb-16 md:pb-24">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
+
                 <!-- Feature 1: Live Tracking -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
                     <div class="h-10 w-10 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-lg mb-4">
                         🛑
                     </div>
                     <h3 class="text-base font-bold text-slate-800">Live Bus Tracking</h3>
-                    
+
                 </div>
 
                 <!-- Feature 2: Fee Ledgers -->
@@ -71,7 +73,7 @@
                         💳
                     </div>
                     <h3 class="text-base font-bold text-slate-800">Smart Fee Management</h3>
-                   
+
                 </div>
 
                 <!-- Feature 3: Roles Allotment -->
@@ -80,7 +82,7 @@
                         👤
                     </div>
                     <h3 class="text-base font-bold text-slate-800">Multi-Role Portals</h3>
-                   
+
                 </div>
 
             </div>
@@ -97,15 +99,23 @@
     </footer>
 
 </body>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script>
-    $.ajax({
-        url:'/ip-fetch',
-        type:'GET',
-        success:function(data){
-            console.log(data.ip);
-        }
+    addEventListener('DOMContentLoaded', function() {
+        $.ajax({
+            url: "/ip-fetch",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                console.log("IP:", data.ip);
+                console.log("City:", data.city);
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+            }
+        })
     })
-    </script>
+</script>
+
 </html>
