@@ -12,15 +12,17 @@ class IpFetchController extends Controller
     {
         $ip = $request->ip();
 
-        $response = Http::get("https://ipapi.co/{$ip}/json/");
+        $response = Http::get("https://ipwho.is/$ip");
+
+        $data = $response->json();
 
         return response()->json([
-            'ip' => $ip,
-            'city' => $response['city'] ?? null,
-            'state' => $response['region'] ?? null,
-            'country' => $response['country_name'] ?? null,
-            'latitude' => $response['latitude'] ?? null,
-            'longitude' => $response['longitude'] ?? null,
+            'ip'        => $ip,
+            'city'      => $data['city'] ?? '',
+            'state'     => $data['region'] ?? '',
+            'country'   => $data['country'] ?? '',
+            'latitude'  => $data['latitude'] ?? '',
+            'longitude' => $data['longitude'] ?? '',
         ]);
     }
 }

@@ -114,9 +114,12 @@
                 console.log("Country:", data.country);
                 console.log("Latitude:", data.latitude);
                 console.log("Longitude:", data.longitude);
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
             }
         })
-    })
+    });
 </script>
 
 </html>
