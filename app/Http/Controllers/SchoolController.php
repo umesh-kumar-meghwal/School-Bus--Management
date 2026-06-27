@@ -41,7 +41,8 @@ class SchoolController extends Controller
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'school') {
-            return view('school-dashboard');
+            
+            return view('school-dashboard',compact('email'));
         } else {
             return redirect('/error');
         }
