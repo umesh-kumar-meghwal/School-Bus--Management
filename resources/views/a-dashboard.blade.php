@@ -75,13 +75,7 @@
                         <a href="/adminshow" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             → Show Admin
                         </a>
-                        <div class="h-[1px] bg-slate-100 my-1"></div>
-                        <a href="/student" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            + Student Register
-                        </a>
-                        <a href="/studentshow" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            → Student Show
-                        </a>
+                        
                     </div>
                 </div>
 
