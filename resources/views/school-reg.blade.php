@@ -11,10 +11,10 @@
 <script>
     function myFuntcion(event) {
         if (event) event.preventDefault();
-        var school_name = document.getElementById('school_name').value;
-        var school_email = document.getElementById('school_email').value;
-        var phone = document.getElementById('phone').value;
-        var address = document.getElementById('address').value;
+        let school_name = document.getElementById('school_name').value;
+        let school_email = document.getElementById('school_email').value;
+        let phone = document.getElementById('phone').value;
+        let address = document.getElementById('address').value;
         console.log(school_name);
         $.ajax({
             url: "/school-regs",
