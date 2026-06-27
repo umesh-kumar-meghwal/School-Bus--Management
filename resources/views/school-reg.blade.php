@@ -28,10 +28,10 @@
             },
             success: function(data) {
                document.getElementById('show').innerHTML=data.message;
-               school_name.value="";
-               school_email.value="";
-               phone.value="";
-               address.value="";
+               school_name="";
+               school_email="";
+               phone="";
+               address="";
             },
             error: function(xhr, status, error) {
                 console.error("Error details:", xhr.responseText);
