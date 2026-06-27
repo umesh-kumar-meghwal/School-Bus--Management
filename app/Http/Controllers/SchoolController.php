@@ -15,7 +15,9 @@ class SchoolController extends Controller
     public function school_regs(Request $request)
     {
         $data = DB::table('school')->where('school_email', $request->input('school_email'))->first();
-        if (!$data) {
+        if ($data) {
+            $msg = ['message' => 'School Already Registered!', 'status' => 'success'];
+        } else {
             School::create([
                 'school_name' => $request->input('school_name'),
                 'school_email' => $request->input('school_email'),
@@ -23,8 +25,6 @@ class SchoolController extends Controller
                 'address' => $request->input('address')
             ]);
             $msg = ['message' => 'School Registration Success!', 'status' => 'success'];
-        } else {
-            $msg = ['message' => 'School Already Registered!', 'status' => 'success'];
         }
         return response()->json($msg);
     }
