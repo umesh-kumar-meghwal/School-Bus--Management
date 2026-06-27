@@ -25,7 +25,7 @@ class SchoolShowController extends Model
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin') {
-            School::where('school_email',$request->school_email)->first()->delete();
+            School::where('school_email',$request->school_email)->delete();
             $data = DB::table('school')->get();
             return view('show-school',compact('data'));
         } else {
