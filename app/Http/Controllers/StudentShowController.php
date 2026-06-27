@@ -12,7 +12,7 @@ class StudentShowController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $data = DB::table('student')->orderBy('name','asc')->get();
             return view('studentshow', compact('data'));
         } else {
@@ -23,7 +23,7 @@ class StudentShowController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $email = $request->email;
             $data = DB::table('student')->where('email', $email)->first();
             return view('s-profileshow', compact('data'));

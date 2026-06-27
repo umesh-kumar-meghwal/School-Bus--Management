@@ -13,7 +13,7 @@ class BusEditController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $id = $request->id;
             $data = DB::table('bus')->where('id', $id)->first();
             $datas = DB::table('route')->get();
@@ -27,7 +27,7 @@ class BusEditController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $id = $request->id;
             $bus_number = $request->bus_number;
             $bus_name = $request->bus_name;
@@ -56,7 +56,7 @@ class BusEditController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $id = $request->id;
             Bus::where('id', $id)->delete();
             return redirect('/busshow');

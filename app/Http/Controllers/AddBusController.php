@@ -13,7 +13,7 @@ class AddBusController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $data = DB::table('route')->get();
             $ddata = DB::table('driver')->get();
             return view('addbus', compact('data', 'ddata'));
@@ -26,7 +26,7 @@ class AddBusController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $bus_num = $request->bus_number;
             $bus_num_check = DB::table('bus')->where('bus_number', $bus_num)->first();
             $route_name_check = DB::table('bus')->where('route_name', $request->route_name)->first();
@@ -66,7 +66,7 @@ class AddBusController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $name = $request->input('name');
             if ($name != "select") {
                 $data = DB::table('driver')->where('name', $name)->first();

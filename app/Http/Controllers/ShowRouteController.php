@@ -17,7 +17,7 @@ class ShowRouteController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == "admin") {
+        if (!empty($email) && $usertype == "admin" || $usertype =='school') {
             $data = DB::table('route')->get();
             return view('route-show', compact('data'));
         } else {
@@ -28,7 +28,7 @@ class ShowRouteController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $id = $request->id;
             $data = DB::table('route')->where('id', $id)->first();
             return view('route-edit', compact('data'));
@@ -41,7 +41,7 @@ class ShowRouteController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $id = $request->id;
             Route::where('id', $id)->update([
                 'route_name' => $request->route_name,
@@ -60,7 +60,7 @@ class ShowRouteController extends Controller
     {
          $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $route = Route::where('id', $request->id)->first();
             if ($route) {
                 $route_name = $route->route_name;

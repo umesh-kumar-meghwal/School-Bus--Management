@@ -14,7 +14,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $data = DB::table('stop')->get();
             return view('add-fee', compact('data'));
         } else {
@@ -25,7 +25,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $stop_name = $request->stop_name;
             $fee = $request->fee;
             $data = DB::table('feest')->where('stop_name', $stop_name)->first();
@@ -51,7 +51,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $data = DB::table('feest')->get();
             return view('show-fee', compact('data'));
         } else {
@@ -63,7 +63,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $data = DB::table('feest')->where('id', $request->id)->first();
             $data1 = DB::table('stop')->get();
 
@@ -76,7 +76,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             Fee::where('id', $request->id)->update([
                 'stop_name' => $request->stop_name,
                 'fee' => $request->fee
@@ -90,7 +90,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $data = DB::table('feest')->where('id', $request->id)->delete();
             return redirect('/show-fee');
         } else {
@@ -103,7 +103,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
             $data = DB::table('student_fee')->where('st_email', $email)->get();
             return view('fee-details', compact('email', 'data'));
@@ -115,7 +115,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
             $data = DB::table('feest')->get();
             return view('deposit-fee', compact('email', 'data'));
@@ -129,7 +129,7 @@ class FeeDetailsContoller extends Controller
 
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
             $stop_name = $request->stop_name;
             $total_fee = $request->total_fee;
@@ -178,7 +178,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
             $data = DB::table('student_fee')->where('id', $request->id)->first();
             $data1 = DB::table('feest')->get();
@@ -192,7 +192,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             Student_Fee::where('id', $request->id)->update([
                 'stop_name' => $request->stop_name,
                 'total_fee' => $request->total_fee,
@@ -213,7 +213,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             DB::table('student_fee')->where('id', $request->id)->delete();
             $data = DB::table('student_fee')->where('st_email', $request->email)->get();
             $email = $request->email;
@@ -227,7 +227,7 @@ class FeeDetailsContoller extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $st_name = $request->input('st_name');
             $data = DB::table('feest')->where('stop_name', $st_name)->first();
             return response()->json($data);

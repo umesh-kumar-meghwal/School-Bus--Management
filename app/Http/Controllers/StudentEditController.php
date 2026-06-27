@@ -17,7 +17,7 @@ class StudentEditController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $email = $request->email;
 
             $data = DB::table('student')->where('email', $email)->first();
@@ -36,7 +36,7 @@ class StudentEditController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $name = $request->name;
             $father_name = $request->father_name;
             $mother_name = $request->mother_name;

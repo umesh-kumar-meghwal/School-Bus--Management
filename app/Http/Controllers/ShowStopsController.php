@@ -14,7 +14,7 @@ class ShowStopsController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $data = DB::table('route')->get();
             return view('add-stop', compact('data'));
         } else {
@@ -25,7 +25,7 @@ class ShowStopsController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $data = DB::table('route')->where('id', $request->route_id)->first();
             Stop::create([
                 'stop_name' => $request->stop_name,
@@ -45,7 +45,7 @@ class ShowStopsController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $data = DB::table('stop')->get();
             return view('show-stop', compact('data'));
         } else {
@@ -56,8 +56,8 @@ class ShowStopsController extends Controller
     public function edit(Request $request)
     {
         $email = session('user');
-        $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        $usertype = session('usertype'); 
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $data = DB::table('stop')->where('id', $request->id)->first();
             $data1 = DB::table('route')->get();
             return view('edit-stop', compact('data', 'data1'));
@@ -69,7 +69,7 @@ class ShowStopsController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             Stop::where('id', $request->id)->update([
                 'route_name' => $request->route_name,
                 'route_id'=>$request->route_id,
@@ -90,7 +90,7 @@ class ShowStopsController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $stop = Stop::where('id', $request->id)->first();
             if ($stop) {
                 $stop_name = $stop->stop_name;
@@ -108,7 +108,7 @@ class ShowStopsController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $data = DB::table('stop')->where('route_id', $request->route_id)->get();
             return view('stop-one-show', compact('data'));
         } else {
@@ -120,7 +120,7 @@ class ShowStopsController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $r_id = DB::table('route')->where('route_name',$request->r_name)->first();
             return response()->json($r_id);
         } else {

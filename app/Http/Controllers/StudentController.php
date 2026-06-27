@@ -26,7 +26,7 @@ class StudentController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $f = DB::table('login')->where('email', $request->email)->first();
             $data = DB::table('department')->get();
 

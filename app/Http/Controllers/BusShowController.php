@@ -11,7 +11,7 @@ class BusShowController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $data = DB::table('bus')->get();
             return view('busshow', compact('data'));
         } else {

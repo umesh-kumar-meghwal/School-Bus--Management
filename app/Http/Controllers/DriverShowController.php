@@ -14,7 +14,7 @@ class DriverShowController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $data = DB::table('driver')->get();
             return view('drivershow', compact('data'));
         } else {
@@ -25,7 +25,7 @@ class DriverShowController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $id = $request->id;
             $data = DB::table('driver')->where('id', $id)->first();
             return view('driveredit', compact('data'));
@@ -37,7 +37,7 @@ class DriverShowController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $id = $request->id;
             $name = $request->name;
             $email = $request->email;
@@ -59,7 +59,7 @@ class DriverShowController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $id = $request->id;
             $driver = Driver::where('id', $id)->first();
             if ($driver) {

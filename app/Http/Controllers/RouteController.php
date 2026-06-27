@@ -13,7 +13,7 @@ class RouteController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             return view('addroute');
         } else {
             return redirect('/error');
@@ -23,7 +23,7 @@ class RouteController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $rt_name = $request->route_name;
             $data = DB::table('route')->where('route_name', $rt_name)->first();
             Route::create([

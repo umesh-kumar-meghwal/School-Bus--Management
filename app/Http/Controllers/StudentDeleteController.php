@@ -19,7 +19,7 @@ class StudentDeleteController extends Controller
   {
     $email = session('user');
     $usertype = session('usertype');
-    if (!empty($email) && $usertype == 'admin') {
+    if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
       $email = $request->email;
       Student::where('email', $email)->delete();
       Login::where('email', $email)->delete();

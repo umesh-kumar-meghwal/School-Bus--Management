@@ -13,7 +13,7 @@ class StudentPhotoUploadController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $email = $request->email;
             return view('uploadstudentphoto', compact('email'));
         } else {
@@ -24,7 +24,7 @@ class StudentPhotoUploadController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $email = $request->email;
             $file = $request->file('photo');
             $filename = time() . '.' . $file->getClientOriginalExtension();
@@ -42,7 +42,7 @@ class StudentPhotoUploadController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $email  = $request->email;
             $p = $request->p;
             return view('sphotochange', compact('email', 'p'));
@@ -55,7 +55,7 @@ class StudentPhotoUploadController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
             $email = $request->email;
             $p = $request->p;
             $filePath = public_path('uploads/' . $p);
@@ -69,9 +69,6 @@ class StudentPhotoUploadController extends Controller
             Student::where('email', $email)->update([
                 'photo' => $filename
             ]);
-
-
-
             $msg = 'Photo Change Successfully';
             return view('sphotochange', compact('msg', 'email', 'p'));
         } else {

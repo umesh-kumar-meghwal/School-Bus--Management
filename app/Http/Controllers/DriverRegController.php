@@ -15,7 +15,7 @@ class DriverRegController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             return view('driverreg');
         } else {
             return redirect('/error');
@@ -25,7 +25,7 @@ class DriverRegController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $lic = $request->license;
             $lic_num = DB::table('driver')->where('license_number', $lic)->first();
             $d_email = DB::table('driver')->where('email', $request->email)->first();

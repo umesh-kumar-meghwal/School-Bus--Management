@@ -13,7 +13,7 @@ class SdashboardController extends Controller
         $usertype = session('usertype');
         if (!empty(session('user')) && $usertype == "student") {
             $data = DB::table('student')->where('email', $email)->first();
-            return view('s-dashboard', compact('data','email'));
+            return view('s-dashboard', compact('data', 'email'));
         } else {
             return redirect('/error');
         }
@@ -22,7 +22,13 @@ class SdashboardController extends Controller
     public function sfee_details()
     {
         $email = session('user');
-        $data = DB::table('student_fee')->where('st_email',$email)->get();
-        return view('s-fee-details',compact('data'));
+        $usertype = session('usertype');
+        if (!empty(session('user')) && $usertype == "student") {
+            $email = session('user');
+            $data = DB::table('student_fee')->where('st_email', $email)->get();
+            return view('s-fee-details', compact('data'));
+        } else {
+            return redirect('/error');
+        }
     }
 }
