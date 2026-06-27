@@ -38,7 +38,7 @@ class SchoolShowController extends Model
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin') {
-            $data = DB::table('school')->where('school_email', $request->school_email)->first();
+            $data = DB::table('school')->where('school_email', $request->email)->first();
             return view('school-edit', compact('data'));
         } else {
 

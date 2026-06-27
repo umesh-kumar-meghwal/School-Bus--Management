@@ -63,7 +63,7 @@
                                         <!-- View Details Action -->
                                         <form action="/s-profileshow" method="post" class="inline">
                                             @csrf
-                                            <input type="hidden" value=" name="email">
+                                            <input type="hidden" value="" name="email">
                                             <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-medium transition shadow-sm">
                                                 Details
                                             </button>
