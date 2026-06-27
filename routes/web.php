@@ -160,6 +160,7 @@ Route::get('/school-reg',[SchoolController::class,'school_reg']);
 Route::post('/school-regs',[SchoolController::class,'school_regs']);
 Route::get('/school-dashboard',[SchoolController::class,'school_dashboard']);
 Route::get('/show-school',[SchoolShowController::class,'show']);
+Route::post('/school-delete',[SchoolShowController::class,'school_delete']);
 
 
 

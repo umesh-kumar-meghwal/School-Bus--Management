@@ -70,7 +70,7 @@
                                         </form>
 
                                         <!-- Delete Action -->
-                                        <form action="/studentdelete" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this student?')">
+                                        <form action="/school-delete" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this student?')">
                                             @csrf
                                             <input type="hidden" value="{{ $d->school_email }}" name="email">
                                             <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-md text-xs font-medium transition shadow-sm">
