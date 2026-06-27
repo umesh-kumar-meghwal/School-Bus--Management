@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,11 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-slate-100 font-sans antialiased min-h-screen">
 
     <div class="flex flex-col md:flex-row min-h-screen">
-        
+
         <!-- Sidebar / User Info Panel -->
         <div class="w-full md:w-64 bg-slate-900 text-white p-6 flex flex-col justify-between">
             <div>
@@ -26,7 +28,7 @@
                     </div>
                     <h2 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">User Email</h2>
                     <p class="text-sm font-medium truncate mb-3" title="{{$email}}">{{$email}}</p>
-                    
+
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                         {{$usertype}}
                     </span>
@@ -46,7 +48,7 @@
 
         <!-- Main Content Area -->
         <div class="flex-1 p-6 md:p-10">
-            
+
             <!-- Live Bus Special Callout -->
             <div class="mb-8">
                 <button onclick="window.location.href='/maps'" class="inline-flex items-center gap-3 px-6 py-4 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl shadow-lg shadow-rose-600/30 transition-all duration-200 transform hover:-translate-y-0.5">
@@ -60,7 +62,7 @@
 
             <!-- Dashboard Modules Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
+
                 <!-- Card 1: User Registration -->
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition duration-200">
                     <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
@@ -83,77 +85,24 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Transport & Drivers -->
+                <!-- Card 2: Schoool -->
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition duration-200">
                     <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                        🚌 Bus & Driver Management
+                        🚌 Schools Management
                     </h3>
                     <div class="flex flex-col gap-2">
-                        <a href="/addbus" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            + Bus Registeration
-                        </a>
+
                         <a href="/busshow" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            → Bus Show
+                            → Schools Show
                         </a>
                         <div class="h-[1px] bg-slate-100 my-1"></div>
-                        <a href="/driverreg" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            + Driver Register
-                        </a>
-                        <a href="/drivershow" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            → Driver Show
-                        </a>
                     </div>
                 </div>
-
-                <!-- Card 3: Routes & Stops -->
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition duration-200">
-                    <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                        📍 Routes & Stops
-                    </h3>
-                    <div class="flex flex-col gap-2">
-                        <a href="/showroute" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            → Route Show
-                        </a>
-                        <a href="/show-stops" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            → Show Stop
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Card 4: Departments -->
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition duration-200">
-                    <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                        🏢 Departments
-                    </h3>
-                    <div class="flex flex-col gap-2">
-                        <a href="/add-depart" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            + Add Department
-                        </a>
-                        <a href="/show-depart" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            → Show Department
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Card 5: Fee Management -->
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition duration-200">
-                    <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                        💳 Fee Management
-                    </h3>
-                    <div class="flex flex-col gap-2">
-                        <a href="/add-fee" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            + Add Fee
-                        </a>
-                        <a href="/show-fee" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            → Show Fee
-                        </a>
-                    </div>
-                </div>
-
             </div>
         </div>
 
     </div>
 
 </body>
+
 </html>
