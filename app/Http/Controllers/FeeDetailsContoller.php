@@ -17,6 +17,10 @@ class FeeDetailsContoller extends Controller
 
     public function sendPush($targetEmail, $messageTitle, $messageBody)
     {
+        dd([
+            'railway_env_val' => env('ONESIGNAL_APP_ID'),
+            'config_val' => config('services.onesignal.app_id'),
+        ]);
         $appId = config('services.onesignal.app_id');
         $restKey = config('services.onesignal.rest_api_key');
 
