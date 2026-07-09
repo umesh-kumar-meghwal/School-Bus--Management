@@ -12,14 +12,14 @@ class HomeController
         $usertype = session('usertype');
 
         if ($usertype == "admin") {
-            $url = "/a-dashboard";
+            return redirect("a-dashboard");
         } elseif ($usertype == "school") {
-            $url = "/school-dashboard";
+            return redirect("school-dashboard");
         } elseif ($usertype == "driver") {
-            $url = "/d-dashboard";
+            return redirect("d-dashboard");
         } elseif ($usertype == "student") {
-            $url = "/s-dashboard";
+            return redirect("s-dashboard");
         }
-        return view('home', compact('usertype','url'));
+        return view('home');
     }
 }

@@ -25,18 +25,11 @@
             <!-- Header Actions -->
             <div class="flex items-center gap-3">
                
-                @if(!isset($url))
-                <a href="{{ $url }}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
-                    Dashboard
-                </a>
-                <a href="/logout" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
-                    Logout
-                </a>
-                @else
+                
+                
                 <a href="/login" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
                     Login to Portal
                 </a>
-                @endif
             </div>
         </div>
     </header>
@@ -55,15 +48,10 @@
 
 
             <div class="mt-8 flex items-center justify-center gap-4">
-                @if(!isset($url))
-                <a href="{{ $url }}" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all duration-150 transform hover:-translate-y-0.5">
-                    Go to Dashboard
-                </a>
-                @else
+               
                 <a href="/login" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all duration-150 transform hover:-translate-y-0.5">
                     Get Started Now
                 </a>
-                @endif
 
             </div>
         </section>
