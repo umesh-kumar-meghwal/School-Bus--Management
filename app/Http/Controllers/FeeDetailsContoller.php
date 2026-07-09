@@ -15,30 +15,22 @@ class FeeDetailsContoller extends Controller
 {
 
 
-    public function sendPush($targetEmail, $messageTitle, $messageBody)
+    public function sendPush($targetEmail, $title, $body)
     {
 
         $appId = env('ONESIGNAL_APP_ID');
         $restKey = env('ONESIGNAL_REST_API_KEY');
-
+        $cleanEmail = strtolower(trim($targetEmail));
 
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $restKey,
             'Content-Type' => 'application/json',
         ])->post('https://onesignal.com/api/v1/notifications', [
             'app_id' => $appId,
-
-            // Sirf usi student ko bhejne ke liye jiski email app me login hai (External User ID mapping)
-            'include_external_user_ids' => [$targetEmail],
-
-            'headings' => [
-                'en' => $messageTitle
-            ],
-            'contents' => [
-                'en' => $messageBody
-            ],
-            // Custom sound lagane ke liye (optional)
-            'android_sound' => 'bus_horn'
+            'include_external_user_ids' => [$cleanEmail], // Updated Clean Email
+            'headings' => ['en' => $title],
+            'contents' => ['en' => $body],
+            'android_sound' => 'bus_horn',
         ]);
 
         return $response->json();
@@ -196,10 +188,10 @@ class FeeDetailsContoller extends Controller
                     'school_email' => $school_email
                 ]);
                 $msg = " Fee Deposit Success";
-                $studentEmail = $email;
-                $amount = $deposit_fee;
+                $studentEmail = $request->email;
+                $amount = $request->deposit_fee;
 
-                $result =$this->sendPush(
+                $result = $this->sendPush(
                     $studentEmail,
                     "Fee Deposited! 💳",
                     "Dear Student, Rs. " . $amount . " has been successfully credited."
