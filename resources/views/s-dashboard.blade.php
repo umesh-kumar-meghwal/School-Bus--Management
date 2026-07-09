@@ -303,7 +303,7 @@
 </html>
 
 <!-- Visual Diagnostic Panel for testing -->
-<div class="m-6 p-4 bg-slate-900 text-emerald-400 rounded-2xl font-mono text-xs space-y-2 shadow-lg border border-slate-800">
+<div class="hidden m-6 p-4 bg-slate-900 text-emerald-400 rounded-2xl font-mono text-xs space-y-2 shadow-lg border border-slate-800">
     <h3 class="text-white font-bold border-b border-slate-800 pb-1.5 mb-2">⚡ Debugging Console:</h3>
     <p id="debug-bridge">Bridge: Checking...</p>
     <p id="debug-email">Email: Checking...</p>
