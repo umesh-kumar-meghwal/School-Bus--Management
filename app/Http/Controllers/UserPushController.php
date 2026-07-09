@@ -64,10 +64,8 @@ class UserPushController extends Controller
                 'user_email' => $email,
             ];
         }
-
         Notification::insert($notifications);
-        $msg = "success";
-
-        return response()->$msg;
+        $msg = ["msg"=>"success"];
+        return response()->json($msg);
     }
 }
