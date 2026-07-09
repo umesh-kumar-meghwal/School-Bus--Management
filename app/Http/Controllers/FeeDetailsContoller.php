@@ -17,8 +17,8 @@ class FeeDetailsContoller extends Controller
 
     public function sendPushNotification($targetEmail, $messageTitle, $messageBody)
     {
-        $appId = env('ONESIGNAL_APP_ID');
-        $restKey = env('ONESIGNAL_REST_API_KEY');
+        $appId = config('services.onesignal.app_id');
+        $restKey = config('services.onesignal.rest_api_key');
 
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $restKey,
@@ -180,7 +180,7 @@ class FeeDetailsContoller extends Controller
             $school_email = $request->school_email;
             $last_fee = DB::table('student_fee')->where('school_email', $school_email)->where('st_email', $email)->where('stop_name', $stop_name)->orderBy('id', 'desc')->first();
             $stop_check = DB::table('student_fee')->where('school_email', $school_email)->where('st_email', $email)->first();
-            $student_name = DB::table('student')->where('school_email', $school_email)->where('st_email', $email)->first()->name;
+            $student_name = DB::table('student')->where('school_email', $school_email)->where('email', $email)->first()->name;
             if (isset($last_fee) && isset($stop_check->stop_name) == $request->stop_name) {
                 $new_due = $last_fee->due_fee - $deposit_fee;
                 Student_Fee::create([
