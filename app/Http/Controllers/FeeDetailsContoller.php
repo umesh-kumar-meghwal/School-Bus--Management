@@ -204,6 +204,11 @@ class FeeDetailsContoller extends Controller
                 );
 
                 dd($result);
+                // Check karein ke Railway dashboard se direct value aa rahi hai ya nahi
+                dd([
+                    'direct_env' => env('ONESIGNAL_APP_ID'),
+                    'config_path' => config('services.onesignal')
+                ]);
                 $data = DB::table('feest')->get();
                 return view('deposit-fee', compact('email', 'data', 'msg', 'school_email'));
             } else {

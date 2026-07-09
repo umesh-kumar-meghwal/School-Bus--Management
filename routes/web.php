@@ -31,9 +31,17 @@ use App\Http\Controllers\IpFetchController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolShowController;
 use App\Http\Controller\BestController;
+use Illuminate\Support\Facades\Artisan;
+
 
 # Index home Page Are Show in the Front of project------------------------------------------------------
 
+Route::get('/clear-all-cache', function() {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    return "Railway Laravel Cache Cleared successfully!";
+});
 Route::get('/', [HomeController::class, 'index']);
 
 # Login Page Are the Login And Include----------------------------------------------------------------
