@@ -8,6 +8,8 @@ class HomeController
 {
     public function index()
     {
-        return view('home');
+        $email = session('user');
+        $usertype = session('usertype');
+        return view('home',compact('usertype'));
     }
 }
