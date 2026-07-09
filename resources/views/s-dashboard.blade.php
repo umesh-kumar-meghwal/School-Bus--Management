@@ -301,3 +301,56 @@
 </body>
 
 </html>
+
+<!-- Visual Diagnostic Panel for testing (Ye mobile screen par dikhega) -->
+<div class="m-6 p-4 bg-slate-900 text-emerald-400 rounded-2xl font-mono text-xs space-y-2 shadow-lg border border-slate-800">
+    <h3 class="text-white font-bold border-b border-slate-800 pb-1.5 mb-2">⚡ Debugging Console:</h3>
+    <p id="debug-bridge">Bridge: Checking...</p>
+    <p id="debug-email">Email: Checking...</p>
+    <p id="debug-status">Status: Checking...</p>
+</div>
+
+<script>
+    function registerOneSignalUser() {
+        var bridgeEl = document.getElementById('debug-bridge');
+        var emailEl = document.getElementById('debug-email');
+        var statusEl = document.getElementById('debug-status');
+        
+        // Laravel Email Variable check
+        var userEmail = "{{ $data->email ?? '' }}"; 
+        
+        if (userEmail) {
+            emailEl.textContent = "Email found in Laravel: " + userEmail;
+            emailEl.className = "text-emerald-400";
+        } else {
+            emailEl.textContent = "Email is EMPTY in Laravel! Check variable.";
+            emailEl.className = "text-rose-400";
+        }
+
+        // Bridge check
+        if (typeof median !== 'undefined' && median.onesignal) {
+            bridgeEl.textContent = "Median Mobile Bridge: ACTIVE (Detected)";
+            bridgeEl.className = "text-emerald-400";
+            
+            var cleanEmail = userEmail.toLowerCase().trim();
+            
+            try {
+                // OneSignal call
+                median.onesignal.setExternalUserId(cleanEmail);
+                statusEl.textContent = "OneSignal: setExternalUserId() executed with " + cleanEmail;
+                statusEl.className = "text-emerald-400";
+            } catch(e) {
+                statusEl.textContent = "OneSignal Error: " + e.message;
+                statusEl.className = "text-rose-400";
+            }
+        } else {
+            bridgeEl.textContent = "Median Mobile Bridge: NOT FOUND (Retrying...)";
+            bridgeEl.className = "text-amber-400";
+            
+            // Retry loop
+            setTimeout(registerOneSignalUser, 500);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", registerOneSignalUser);
+</script>
