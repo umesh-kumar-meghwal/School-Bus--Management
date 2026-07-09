@@ -75,7 +75,7 @@
                             → Student Show
                         </a>
                         <a href="/push?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            → Student Show
+                            → Push Notifications
                         </a>
                     </div>
                 </div>
