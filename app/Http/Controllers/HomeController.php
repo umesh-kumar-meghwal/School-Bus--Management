@@ -19,7 +19,8 @@ class HomeController
             return redirect("d-dashboard");
         } elseif ($usertype == "student") {
             return redirect("s-dashboard");
+        } else {
+            return view('home');
         }
-        return view('home');
     }
 }
