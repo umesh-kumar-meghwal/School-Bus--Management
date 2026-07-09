@@ -27,22 +27,24 @@
                 <button onclick="history.back()" class="text-xs font-semibold text-slate-500 hover:text-slate-800 transition">
                     ← Back
                 </button>
-                @if(isset($usertype) == 'admin'){
+                {{ $usertype }}
+                @if(isset($usertype) == 'admin')
+                {{ $usertype }}
                 <a href="/a-dashboard" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
                     Dashboard
-                </a>}
-                @elseif(isset($usertype) =='school'){
+                </a>
+                @elseif(isset($usertype) =='school')
                 <a href="/school-dashboard" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
                     Dashboard
                 </a>}
-                @elseif(isset($usertype) =='driver'){
+                @elseif(isset($usertype) =='driver')
                 <a href="/d-dashboard" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
                     Dashboard
-                </a>}
-                @elseif(isset($usertype) =='student'){
+                </a>
+                @elseif(isset($usertype) =='student')
                 <a href="/s-dashboard" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
                     Dashboard
-                </a>}
+                </a>
                 @else{
                 <a href="/login" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
                     Login to Portal
