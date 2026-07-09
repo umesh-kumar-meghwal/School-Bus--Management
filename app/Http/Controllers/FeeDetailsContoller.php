@@ -191,13 +191,11 @@ class FeeDetailsContoller extends Controller
                 $studentEmail = $request->email;
                 $amount = $request->deposit_fee;
 
-                $result = $this->sendPush(
+                $this->sendPush(
                     $studentEmail,
                     "Fee Deposited! 💳",
-                    "Dear Student, Rs. " . $amount . " has been successfully credited."
+                    "Dear " . $student_name . ", Rs. " . $amount . " has been successfully credited."
                 );
-                // Is debug command ko temporary wapas lagayein:
-                dd($result);
 
                 $data = DB::table('feest')->get();
                 return view('deposit-fee', compact('email', 'data', 'msg', 'school_email'));
@@ -213,6 +211,14 @@ class FeeDetailsContoller extends Controller
                     'school_email' => $school_email
                 ]);
                 $msg = " Fee Deposit Success";
+                $studentEmail = $request->email;
+                $amount = $request->deposit_fee;
+                $this->sendPush(
+                    $studentEmail,
+                    "Fee Deposited! 💳",
+                    "Dear " . $student_name . ", Rs. " . $amount . " has been successfully credited."
+                );
+
                 $data = DB::table('feest')->get();
                 return view('deposit-fee', compact('email', 'data', 'msg', 'school_email'));
             }
