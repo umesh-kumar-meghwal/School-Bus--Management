@@ -32,7 +32,7 @@
                 onclick="myfunction()" 
                 class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm rounded-lg shadow-sm hover:shadow transition duration-150 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-                Go to login
+                Go to Home
             </button>
         </div>
 
@@ -41,7 +41,7 @@
     <!-- Original Redirection Script -->
     <script>
         function myfunction() {
-            window.location.href = "/login";
+            window.location.href = "/";
         }
     </script>
 
