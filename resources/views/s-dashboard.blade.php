@@ -302,7 +302,7 @@
 
 </html>
 
-<!-- Visual Diagnostic Panel for testing (Ye mobile screen par dikhega) -->
+<!-- Visual Diagnostic Panel for testing -->
 <div class="m-6 p-4 bg-slate-900 text-emerald-400 rounded-2xl font-mono text-xs space-y-2 shadow-lg border border-slate-800">
     <h3 class="text-white font-bold border-b border-slate-800 pb-1.5 mb-2">⚡ Debugging Console:</h3>
     <p id="debug-bridge">Bridge: Checking...</p>
@@ -316,7 +316,6 @@
         var emailEl = document.getElementById('debug-email');
         var statusEl = document.getElementById('debug-status');
         
-        // Laravel Email Variable check
         var userEmail = "{{ $data->email ?? '' }}"; 
         
         if (userEmail) {
@@ -327,7 +326,6 @@
             emailEl.className = "text-rose-400";
         }
 
-        // Bridge check
         if (typeof median !== 'undefined' && median.onesignal) {
             bridgeEl.textContent = "Median Mobile Bridge: ACTIVE (Detected)";
             bridgeEl.className = "text-emerald-400";
@@ -335,10 +333,19 @@
             var cleanEmail = userEmail.toLowerCase().trim();
             
             try {
-                // OneSignal call
-                median.onesignal.setExternalUserId(cleanEmail);
-                statusEl.textContent = "OneSignal: setExternalUserId() executed with " + cleanEmail;
-                statusEl.className = "text-emerald-400";
+                // OneSignal SDK v5+ me "setExternalUserId" ke bajaye "login" use hota hai:
+                if (typeof median.onesignal.login === 'function') {
+                    median.onesignal.login(cleanEmail);
+                    statusEl.textContent = "OneSignal: login() executed with " + cleanEmail;
+                    statusEl.className = "text-emerald-400";
+                } else if (typeof median.onesignal.setExternalUserId === 'function') {
+                    median.onesignal.setExternalUserId(cleanEmail);
+                    statusEl.textContent = "OneSignal: setExternalUserId() executed with " + cleanEmail;
+                    statusEl.className = "text-emerald-400";
+                } else {
+                    statusEl.textContent = "Error: No matching OneSignal login function found!";
+                    statusEl.className = "text-rose-400";
+                }
             } catch(e) {
                 statusEl.textContent = "OneSignal Error: " + e.message;
                 statusEl.className = "text-rose-400";
@@ -347,7 +354,6 @@
             bridgeEl.textContent = "Median Mobile Bridge: NOT FOUND (Retrying...)";
             bridgeEl.className = "text-amber-400";
             
-            // Retry loop
             setTimeout(registerOneSignalUser, 500);
         }
     }
