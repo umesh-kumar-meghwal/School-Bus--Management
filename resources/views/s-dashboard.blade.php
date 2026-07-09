@@ -101,7 +101,23 @@
                             <div>
                                 <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Email Address</span>
                                 <span class="text-sm font-semibold text-slate-800 mt-1 block">{{ $data->email }}</span>
-                            </div>
+                            </div><script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        if (typeof median !== 'undefined') {
+            
+            // User login email ko OneSignal ke sath connect karein (External User ID)
+            // Yahan Laravel se logged-in user ka email pass karein
+            var userEmail = "{{ $data->email ?? '' }}"; 
+            
+            if (userEmail) {
+             
+                median.onesignal.setExternalUserId(userEmail);
+                console.log("OneSignal registered with: " + userEmail);
+            }
+        }
+    });
+</script>
 
                             <div>
                                 <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Home Address</span>

@@ -28,6 +28,21 @@
                     </div>
                     <h2 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">User Email</h2>
                     <p class="text-sm font-medium truncate mb-3" title="{{$email}}">{{$email}}</p>
+                    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+       
+        if (typeof median !== 'undefined') {
+            
+            var userEmail = "{{ $email ?? '' }}"; 
+            
+            if (userEmail) {
+               
+                median.onesignal.setExternalUserId(userEmail);
+                console.log("OneSignal registered with: " + userEmail);
+            }
+        }
+    });
+</script>
 
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                         {{$usertype}}

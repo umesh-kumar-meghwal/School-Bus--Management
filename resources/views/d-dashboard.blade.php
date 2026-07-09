@@ -38,6 +38,22 @@
                         <span class="block uppercase font-bold tracking-wide">Driver Email</span>
                         <span class="text-slate-200 font-medium break-all">{{ $data->email }}</span>
                     </div>
+                    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        if (typeof median !== 'undefined') {
+            
+          
+            var userEmail = "{{ $data->email ?? '' }}"; 
+            
+            if (userEmail) {
+               
+                median.onesignal.setExternalUserId(userEmail);
+                console.log("OneSignal registered with: " + userEmail);
+            }
+        }
+    });
+</script>
                     <div>
                         <span class="block uppercase font-bold tracking-wide">Phone Number</span>
                         <span class="text-slate-200 font-medium">{{ $data->phone }}</span>

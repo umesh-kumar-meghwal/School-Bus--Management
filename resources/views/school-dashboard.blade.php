@@ -76,6 +76,23 @@
                         </a>
                     </div>
                 </div>
+                <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Check karein ke website mobile app ke andar khuli hai
+        if (typeof median !== 'undefined') {
+            
+            // User login email ko OneSignal ke sath connect karein (External User ID)
+            // Yahan Laravel se logged-in user ka email pass karein
+            var userEmail = "{{ $email ?? '' }}"; 
+            
+            if (userEmail) {
+                // OneSignal me user register ho jayega
+                median.onesignal.setExternalUserId(userEmail);
+                console.log("OneSignal registered with: " + userEmail);
+            }
+        }
+    });
+</script>
 
                 <!-- Card 2: Transport & Drivers -->
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition duration-200">
