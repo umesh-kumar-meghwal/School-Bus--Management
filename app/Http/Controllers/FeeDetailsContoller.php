@@ -17,12 +17,10 @@ class FeeDetailsContoller extends Controller
 
     public function sendPush($targetEmail, $messageTitle, $messageBody)
     {
-        dd([
-            'railway_env_val' => env('ONESIGNAL_APP_ID'),
-            'config_val' => config('services.onesignal.app_id'),
-        ]);
-        $appId = config('services.onesignal.app_id');
-        $restKey = config('services.onesignal.rest_api_key');
+
+        $appId = env('ONESIGNAL_APP_ID');
+        $restKey = env('ONESIGNAL_REST_API_KEY');
+
 
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $restKey,
@@ -201,18 +199,13 @@ class FeeDetailsContoller extends Controller
                 $studentEmail = $email;
                 $amount = $deposit_fee;
 
-                $result = $this->sendPush(
+                $this->sendPush(
                     $studentEmail,
                     "Fee Deposited! 💳",
                     "Dear Student, Rs. " . $amount . " has been successfully credited."
                 );
 
-                dd($result);
-                // Check karein ke Railway dashboard se direct value aa rahi hai ya nahi
-                dd([
-                    'direct_env' => env('ONESIGNAL_APP_ID'),
-                    'config_path' => config('services.onesignal')
-                ]);
+
                 $data = DB::table('feest')->get();
                 return view('deposit-fee', compact('email', 'data', 'msg', 'school_email'));
             } else {
