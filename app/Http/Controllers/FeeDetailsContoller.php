@@ -15,7 +15,7 @@ class FeeDetailsContoller extends Controller
 {
 
 
-    public function sendPushNotification($targetEmail, $messageTitle, $messageBody)
+    public function sendPush($targetEmail, $messageTitle, $messageBody)
     {
         $appId = config('services.onesignal.app_id');
         $restKey = config('services.onesignal.rest_api_key');
@@ -194,11 +194,16 @@ class FeeDetailsContoller extends Controller
                     'school_email' => $school_email
                 ]);
                 $msg = " Fee Deposit Success";
-                $this->sendPushNotification(
-                    $email,
+                $studentEmail = $email;
+                $amount = $deposit_fee;
+
+                $result = $this->sendPush(
+                    $studentEmail,
                     "Fee Deposited! 💳",
-                    "Hi " . $student_name . ", Rs. 1500 Fee has been Deposit successfully."
+                    "Dear Student, Rs. " . $amount . " has been successfully credited."
                 );
+
+                dd($result);
                 $data = DB::table('feest')->get();
                 return view('deposit-fee', compact('email', 'data', 'msg', 'school_email'));
             } else {
