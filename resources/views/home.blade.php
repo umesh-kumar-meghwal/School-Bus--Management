@@ -36,7 +36,7 @@
                     Dashboard
                 </a>
                 @elseif(isset($usertype) =='driver')
-                <a href="/school-dashboard" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
+                <a href="/d-dashboard" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
                     Dashboard
                 </a>
                 @elseif(isset($usertype) =='student')
