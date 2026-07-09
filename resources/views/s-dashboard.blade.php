@@ -105,19 +105,27 @@
                                 <span class="text-sm font-semibold text-slate-800 mt-1 block">{{ $data->email }}</span>
                             </div>
                             <script>
-                                document.addEventListener("DOMContentLoaded", function() {
-                                    if (typeof median !== 'undefined') {
+                                function registerOneSignalUser() {
+                                    // Agar Median app container aur onesignal plugin active ho chuke hain:
+                                    if (typeof median !== 'undefined' && median.onesignal) {
 
-                                        // NOTE: {{ $email }} ke bajaye {{ $data->email }} ka istemal karein:
                                         var userEmail = "{{ $data->email ?? '' }}";
 
                                         if (userEmail) {
-                                            // OneSignal me user register ho jayega (Standard case-insensitive email)
-                                            median.onesignal.setExternalUserId(userEmail.toLowerCase().trim());
-                                            console.log("OneSignal registered with: " + userEmail);
+                                            var cleanEmail = userEmail.toLowerCase().trim();
+
+                                            // OneSignal mapping command
+                                            median.onesignal.setExternalUserId(cleanEmail);
+                                            console.log("OneSignal Mapping Successful: " + cleanEmail);
                                         }
+                                    } else {
+                                        // Agar bridge abhi load nahi hua, toh 300 milliseconds baad dobara koshish karein
+                                        setTimeout(registerOneSignalUser, 300);
                                     }
-                                });
+                                }
+
+                                // Page load hote hi function run karein
+                                document.addEventListener("DOMContentLoaded", registerOneSignalUser);
                             </script>
 
                             <div>
