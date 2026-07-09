@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-use App\Models\Fee;
+use App\Models\Notification;
 use App\Models\Student_Fee;
 use Illuminate\Support\Facades\Crypt;
 
@@ -23,7 +23,6 @@ class UserPushController extends Controller
     {
         $appId = env('ONESIGNAL_APP_ID');
         $restKey = env('ONESIGNAL_REST_API_KEY');
-
         $cleanEmails = array_map(function ($email) {
             return strtolower(trim($email));
         }, $emails);
@@ -55,6 +54,14 @@ class UserPushController extends Controller
             ->pluck('email')
             ->toArray();
         $this->user_push($emails, $title, $body);
+        foreach($emails as $email){
+        Notification::created([
+            'title'=>$title,
+            'content'=>$body,
+            'school_email'=>$school_email,
+            'user_email'=>$email
+        ]);
+        }
         $msg="success";
 
         return response()->$msg;
