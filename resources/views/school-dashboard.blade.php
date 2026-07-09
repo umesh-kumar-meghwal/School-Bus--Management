@@ -49,7 +49,7 @@
             
             <!-- Live Bus Special Callout -->
             <div class="mb-8">
-                <button onclick="window.location.href='/maps'" class="inline-flex items-center gap-3 px-6 py-4 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl shadow-lg shadow-rose-600/30 transition-all duration-200 transform hover:-translate-y-0.5">
+                <button onclick="window.location.href='/maps?q={{ Crypt::encryptString($email) }}'" class="inline-flex items-center gap-3 px-6 py-4 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl shadow-lg shadow-rose-600/30 transition-all duration-200 transform hover:-translate-y-0.5">
                     <span class="relative flex h-3 w-3">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
