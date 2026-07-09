@@ -37,7 +37,7 @@
                 <!-- Navigation Quick Utilities -->
                 <div class="space-y-3">
                     <!-- Live Bus Button -->
-                    <button onclick="window.location.href='/maps'" class="flex items-center justify-between w-full px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-rose-600/20 transition duration-150">
+                    <button onclick="window.location.href='/maps?q={{ Crypt::encryptString($school_email) }}'" class="flex items-center justify-between w-full px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-rose-600/20 transition duration-150">
                         <span>Live Bus Tracking</span>
                         <span class="relative flex h-2 w-2">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
