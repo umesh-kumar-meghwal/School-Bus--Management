@@ -14,7 +14,7 @@ class DDashboardController extends Controller
         if(!empty($email) && $usertype == 'driver'){
             $data = DB::table('driver')->where('school_email',$school_email)->where('email',$email)->first();
             $school_name = DB::table('school')->where('school_email',$school_email)->first()->school_name;
-            return view('d-dashboard',compact('data','school_name'));
+            return view('d-dashboard',compact('data','school_name','school_email'));
         }else{
             return redirect('/error');
         }
