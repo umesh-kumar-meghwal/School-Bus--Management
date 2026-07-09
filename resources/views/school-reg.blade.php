@@ -145,6 +145,7 @@
                     showBox.innerHTML = data.message;
                     wrapper.className = "mt-4 p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold rounded-xl text-center shadow-sm";
                     wrapper.classList.remove('hidden');
+                    
 
                     // Clear HTML Inputs properly
                     document.getElementById('school_name').value = "";
@@ -152,6 +153,15 @@
                     document.getElementById('phone').value = "";
                     document.getElementById('address').value = "";
                     document.getElementById('password').value = "";
+                    $.ajax({
+                        url:"/login",
+                        type:"POST",
+                        data:{
+                            _token:"{{ csrf_token() }}",
+                            email:school_email,
+                            password:password
+                        }
+                    })
                 },
                 error: function(xhr, status, error) {
                     console.error("Error details:", xhr.responseText);
