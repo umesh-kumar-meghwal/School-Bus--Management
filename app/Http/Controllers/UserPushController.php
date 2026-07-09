@@ -50,19 +50,23 @@ class UserPushController extends Controller
         $title = $request->input('title');
         $body = $request->input('content');
         $emails = DB::table('student')
-            ->where('school_email',Crypt::decryptString($school_email))
+            ->where('school_email', Crypt::decryptString($school_email))
             ->pluck('email')
             ->toArray();
         $this->user_push($emails, $title, $body);
-        foreach($emails as $email){
-        Notification::created([
-            'title'=>$title,
-            'content'=>$body,
-            'school_email'=>$school_email,
-            'user_email'=>$email
-        ]);
+        $decryptedSchoolEmail = Crypt::decryptString($school_email);
+        $notifications = [];
+        foreach ($emails as $email) {
+            $notifications[] = [
+                'title' => $title,
+                'content' => $body,
+                'school_email' => $decryptedSchoolEmail,
+                'user_email' => $email,
+            ];
         }
-        $msg="success";
+
+        Notification::insert($notifications);
+        $msg = "success";
 
         return response()->$msg;
     }
