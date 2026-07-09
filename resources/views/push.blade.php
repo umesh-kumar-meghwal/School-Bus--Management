@@ -1,7 +1,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<h1>Push Notifications</h1>
+<h1>All Student Push Notifications</h1>
 <p>Enter the Title : <input type="text" name="title" id="title"></p>
-<p>Enter the Content <input type="text" name="content" id="content"></p>
+<p>Enter the Content <textarea type="text" name="content" id="content"></p>
 <input type="hidden" name="school_email" value="{{ $school_email }}" id="school_email">
 <button onclick="myfunction()">Push</button>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -27,6 +27,4 @@
             }
         })
     }
-
-
 </script>
