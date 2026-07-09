@@ -31,6 +31,7 @@ use App\Http\Controllers\IpFetchController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolShowController;
 use App\Http\Controller\BestController;
+use App\Http\Controllers\UserPushController;
 use Illuminate\Support\Facades\Artisan;
 
 
@@ -43,6 +44,9 @@ Route::get('/clear-all-cache', function() {
     return "Railway Laravel Cache Cleared successfully!";
 });
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/push',[UserPushController::class,'push']);
+Route::get('/pushed',[UserPushController::class,'pushed']);
+
 
 # Login Page Are the Login And Include----------------------------------------------------------------
 Route::get('/login', [LoginController::class, 'login']);
