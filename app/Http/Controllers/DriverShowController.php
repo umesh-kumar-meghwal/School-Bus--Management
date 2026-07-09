@@ -5,18 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Driver;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use App\Models\Bus;
 
 class DriverShowController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
-            $data = DB::table('driver')->get();
-            return view('drivershow', compact('data'));
+            $school_email = $request->q;
+            $data = DB::table('driver')->where('school_email',Crypt::decryptString($school_email))->get();
+            return view('drivershow', compact('data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -49,7 +51,9 @@ class DriverShowController extends Controller
                 'phone' => $phone,
                 'license_number' => $license
             ]);
-            return redirect('/drivershow');
+            $school_email = $request->school_email;
+            $data = DB::table('driver')->where('school_email',Crypt::decryptString($school_email))->get();
+            return view('drivershow', compact('data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -67,7 +71,9 @@ class DriverShowController extends Controller
                 Bus::where('driver_name', $driver_name)->update(['driver_name' => 'No Name', 'driver_phone' => 'No Phone']);
                 $driver->delete();
             }
-            return redirect('/drivershow');
+            $school_email = $request->school_email;
+            $data = DB::table('driver')->where('school_email',Crypt::decryptString($school_email))->get();
+            return view('drivershow', compact('data','school_email'));
         } else {
             return redirect('/error');
         }

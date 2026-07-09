@@ -10,8 +10,7 @@
 <body class="bg-slate-100 font-sans antialiased min-h-screen flex items-center justify-center p-4 md:p-8">
 
     <div class="max-w-2xl w-full bg-white rounded-2xl border border-slate-200 shadow-xl p-6 md:p-8">
-        
-        <!-- Back Button & Header -->
+    <!-- Back Button & Header -->
         <div class="mb-6">
             <button onclick="history.back()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition mb-4">
                 ← Back
@@ -22,7 +21,7 @@
         <!-- Form Start -->
         <form action="/addroute" method="post" class="space-y-6">
             @csrf
-
+            <input type="hidden" value="{{ $school_email }}" name="school_email">
             <!-- Form Grid Layout (2-Columns) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 

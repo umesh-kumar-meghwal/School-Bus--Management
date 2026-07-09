@@ -44,7 +44,8 @@
                         @csrf
 
                         <!-- Hidden Input for ID -->
-                         <input type="hidden" value="{{ $data->id }}" name="id">
+                        <input type="hidden" value="{{ $data->id }}" name="id">
+                        <input type="hidden" value="{{ Crypt::encryptString($data->school_email) }}" id="school_email" name="school_email">
                         <!--Route Name --->
                         <div>
                             <label for="route_id" class="block text-sm font-medium text-slate-700 mb-1.5">Select Route</label>
@@ -57,18 +58,20 @@
                                 <option value="{{ $d->route_name }}" {{ $d->route_name == $data->route_name  ? 'selected':''}}>{{ $d->route_name }}</option>
                                 @endforeach
                             </select>
-                                <input type="hidden" id="id" value="" name="route_id">
+                            <input type="hidden" id="id" value="" name="route_id">
 
                         </div>
                         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
                         <script>
+                            var school_email = document.getElementById("school_email").value;
                             document.getElementById('route_name').onchange = function() {
                                 $.ajax({
                                     url: '/id-fetch',
                                     type: 'POST',
                                     data: {
                                         _token: '{{ csrf_token() }}',
-                                        r_name: this.value
+                                        r_name: this.value,
+                                        school_email: school_email
                                     },
                                     success: function(data) {
                                         document.getElementById('id').value = data.id;
@@ -168,7 +171,8 @@
     @endif
 
     <!-- Leaflet Map Scripts -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var initialLat = parseFloat("{{ $data->latitude  }}");
@@ -177,7 +181,8 @@
             var map = L.map('map').setView([initialLat, initialLng], 14);
 
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© '
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
             }).addTo(map);
 
             // Draw initial marker at existing coordinate positions

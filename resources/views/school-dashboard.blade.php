@@ -68,10 +68,10 @@
                     </h3>
                     <div class="flex flex-col gap-2">
                         <div class="h-[1px] bg-slate-100 my-1"></div>
-                        <a href="/student" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/student?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             + Student Register
                         </a>
-                        <a href="/studentshow" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/studentshow?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             → Student Show
                         </a>
                     </div>
@@ -83,17 +83,17 @@
                         🚌 Bus & Driver Management
                     </h3>
                     <div class="flex flex-col gap-2">
-                        <a href="/addbus" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/addbus?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             + Bus Registeration
                         </a>
-                        <a href="/busshow" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/busshow?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             → Bus Show
                         </a>
                         <div class="h-[1px] bg-slate-100 my-1"></div>
-                        <a href="/driverreg" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/driverreg?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             + Driver Register
                         </a>
-                        <a href="/drivershow" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/drivershow?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             → Driver Show
                         </a>
                     </div>
@@ -105,10 +105,19 @@
                         📍 Routes & Stops
                     </h3>
                     <div class="flex flex-col gap-2">
-                        <a href="/showroute" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
-                            → Route Show
+                        <a href="/addroute?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                            → Route Register
+
                         </a>
-                        <a href="/show-stops" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+
+                        <a href="/showroute?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                            → Show Route
+
+                        </a>
+                        <a href="/add-stop?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                            → Add Stop
+                        </a>
+                        <a href="/show-stops?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             → Show Stop
                         </a>
                     </div>
@@ -120,10 +129,10 @@
                         🏢 Departments
                     </h3>
                     <div class="flex flex-col gap-2">
-                        <a href="/add-depart" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/add-depart?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             + Add Department
                         </a>
-                        <a href="/show-depart" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/show-depart?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             → Show Department
                         </a>
                     </div>
@@ -135,10 +144,10 @@
                         💳 Fee Management
                     </h3>
                     <div class="flex flex-col gap-2">
-                        <a href="/add-fee" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/add-fee?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             + Add Fee
                         </a>
-                        <a href="/show-fee" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
+                        <a href="/show-fee?q={{ Crypt::encryptString($email) }}" class="block w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition">
                             → Show Fee
                         </a>
                     </div>

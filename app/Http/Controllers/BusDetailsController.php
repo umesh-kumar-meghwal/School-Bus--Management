@@ -16,10 +16,11 @@ class BusDetailsController extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
+            $school_email = $request->school_email;
             $data = Student::where('email', $email)->first();
 
 
-            return view('bus-details', compact('email', 'data'));
+            return view('bus-details', compact('email', 'data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -32,8 +33,9 @@ class BusDetailsController extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
-            $datas = DB::table('route')->get();
-            return view('assign-bus', compact('email', 'datas'));
+            $school_email = $request->school_email;
+            $datas = DB::table('route')->where('school_email',$school_email)->get();
+            return view('assign-bus', compact('email', 'datas','school_email'));
         } else {
             return redirect('/error');
         }
@@ -46,13 +48,14 @@ class BusDetailsController extends Controller
             $email = $request->email;
             $route_name = $request->route_name;
             $stop_name = $request->stop_name;
-            Student::where('email', $email)->update([
+            $school_email = $request->school_email;
+            Student::where('school_email',$school_email)->where('email', $email)->update([
                 'route_name' => $route_name,
-                'stop_name' => $stop_name
+                'stop_name' => $stop_name,
             ]);
             $datas = DB::table('route')->get();
             $msg = "bus assign success";
-            return view('assign-bus', compact('email', 'datas', 'msg'));
+            return view('assign-bus', compact('email', 'datas', 'msg','school_email'));
         } else {
             return redirect('/error');
         }
@@ -63,12 +66,14 @@ class BusDetailsController extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $routeName = $request->input('route_name');
+            $school_email = $request->input('school_email');
 
             if (!$routeName) {
                 return response()->json([]);
             }
 
             $stops = DB::table('stop')
+                ->where('school_email',$school_email)
                 ->where('route_name', $routeName)
                 ->get(['stop_name']);
 
@@ -82,12 +87,14 @@ class BusDetailsController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school' || $usertype == "student") {
             $route_name = $request->input('route_name');
+            $school_email = $request->input('school_email');
             if (!$route_name) {
                 return response()->json([]);
             }
             $stop = DB::table('bus')
+                ->where('school_email',$school_email)
                 ->where('route_name', $route_name)
                 ->first([
                     'bus_number',
@@ -106,12 +113,13 @@ class BusDetailsController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school' || $usertype == "student") {
             $st_name = $request->input('t');
+            $school_email = $request->input('school_email');
             if (!$st_name) {
                 return response()->json([]);
             }
-            $stop = DB::table('stop')
+            $stop = DB::table('stop')->where('school_email',$school_email)
                 ->where('stop_name', $st_name)
                 ->first([
                     'pickup_time',
@@ -129,9 +137,10 @@ class BusDetailsController extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $d_email = $request->email;
-            Student::where('email', $d_email)->update(['stop_name' => null, 'route_name' => null]);
+            $school_email = $request->school_email;
+            Student::where('school_email',$school_email)->where('email', $d_email)->update(['stop_name' => null, 'route_name' => null]);
             $email = $request->email;
-            $data = Student::where('email', $email)->first();
+            $data = Student::where('school_email',$school_email)->where('email', $email)->first();
             return view('bus-details', compact('email', 'data'));
         } else {
             return redirect('/error');

@@ -33,6 +33,7 @@ class SchoolShowController extends Model
         }
     }
 
+    
     public function school_edit(Request $request)
     {
         $email = session('user');

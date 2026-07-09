@@ -7,16 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Fee;
 use App\Models\Student_Fee;
+use Illuminate\Support\Facades\Crypt;
 
 class FeeDetailsContoller extends Controller
 {
-    public function add_fee()
+    public function add_fee(Request $request)
     {
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
-            $data = DB::table('stop')->get();
-            return view('add-fee', compact('data'));
+            $school_email = $request->q;
+            $data = DB::table('stop')->where('school_email',Crypt::decryptString($school_email))->get();
+            return view('add-fee', compact('data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -26,34 +28,37 @@ class FeeDetailsContoller extends Controller
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
+            $school_email = $request->school_email;
             $stop_name = $request->stop_name;
             $fee = $request->fee;
-            $data = DB::table('feest')->where('stop_name', $stop_name)->first();
+            $data = DB::table('feest')->where('school_email',Crypt::decryptString($school_email))->where('stop_name', $stop_name)->first();
             if (!$data) {
                 Fee::create([
                     'stop_name' => $stop_name,
-                    'fee' => $fee
+                    'fee' => $fee,
+                    'school_email'=>Crypt::decryptString($school_email)
                 ]);
-                $data = DB::table('stop')->get();
+                $data = DB::table('stop')->where('school_email',Crypt::decryptString($school_email))->get();
                 $msg = 'fee added success';
-                return view('add-fee', compact('data', 'msg'));
+                return view('add-fee', compact('data', 'msg','school_email'));
             } else {
                 $msg = "fee added already";
-                $data = DB::table('stop')->get();
-                return view('add-fee', compact('data', 'msg'));
+                $data = DB::table('stop')->where('school_email',Crypt::decryptString($school_email))->get();
+                return view('add-fee', compact('data', 'msg','school_email'));
             }
         } else {
             return redirect('/error');
         }
     }
 
-    public function show_fee()
+    public function show_fee(Request $request)
     {
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
-            $data = DB::table('feest')->get();
-            return view('show-fee', compact('data'));
+            $school_email = $request->q;
+            $data = DB::table('feest')->where('school_email',Crypt::decryptString($school_email))->get();
+            return view('show-fee', compact('data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -64,9 +69,9 @@ class FeeDetailsContoller extends Controller
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
+            $school_email = $request->school_email;
             $data = DB::table('feest')->where('id', $request->id)->first();
-            $data1 = DB::table('stop')->get();
-
+            $data1 = DB::table('stop')->where('school_email',Crypt::decryptString($school_email))->get();
             return view('fee-edit', compact('data', 'data1'));
         } else {
             return redirect('/error');
@@ -81,7 +86,9 @@ class FeeDetailsContoller extends Controller
                 'stop_name' => $request->stop_name,
                 'fee' => $request->fee
             ]);
-            return redirect('/show-fee');
+            $school_email = $request->school_email;
+            $data = DB::table('feest')->where('school_email',Crypt::decryptString($school_email))->get();
+            return view('show-fee', compact('data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -92,7 +99,9 @@ class FeeDetailsContoller extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $data = DB::table('feest')->where('id', $request->id)->delete();
-            return redirect('/show-fee');
+            $school_email = $request->school_email;
+            $data = DB::table('feest')->where('school_email',Crypt::decryptString($school_email))->get();
+            return view('show-fee', compact('data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -105,8 +114,9 @@ class FeeDetailsContoller extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
-            $data = DB::table('student_fee')->where('st_email', $email)->get();
-            return view('fee-details', compact('email', 'data'));
+            $school_email = $request->school_email;
+            $data = DB::table('student_fee')->where('school_email',$school_email)->where('st_email', $email)->get();
+            return view('fee-details', compact('email', 'data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -117,8 +127,9 @@ class FeeDetailsContoller extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
-            $data = DB::table('feest')->get();
-            return view('deposit-fee', compact('email', 'data'));
+            $school_email = $request->school_email;
+            $data = DB::table('feest')->where('school_email',$school_email)->get();
+            return view('deposit-fee', compact('email', 'data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -136,8 +147,9 @@ class FeeDetailsContoller extends Controller
             $deposit_fee = $request->deposit_fee;
             $date = $request->date;
             $time = $request->time;
-            $last_fee = DB::table('student_fee')->where('st_email', $email)->where('stop_name',$stop_name)->orderBy('id', 'desc')->first();
-            $stop_check = DB::table('student_fee')->where('st_email',$email)->first();
+            $school_email = $request->school_email; 
+            $last_fee = DB::table('student_fee')->where('school_email',$school_email)->where('st_email', $email)->where('stop_name',$stop_name)->orderBy('id', 'desc')->first();
+            $stop_check = DB::table('student_fee')->where('school_email',$school_email)->where('st_email',$email)->first();
             if (isset($last_fee) && isset($stop_check->stop_name) == $request->stop_name) {
                 $new_due = $last_fee->due_fee - $deposit_fee;
                 Student_Fee::create([
@@ -147,11 +159,12 @@ class FeeDetailsContoller extends Controller
                     'deposit_fee' => $deposit_fee,
                     'due_fee' => $new_due,
                     'date' => $date,
-                    'time' => $time
+                    'time' => $time,
+                    'school_email'=>$school_email
                 ]);
                 $msg = " Fee Deposit Success";
                 $data = DB::table('feest')->get();
-                return view('deposit-fee', compact('email', 'data', 'msg'));
+                return view('deposit-fee', compact('email', 'data', 'msg','school_email'));
 
             } else {
                 Student_Fee::create([
@@ -161,11 +174,12 @@ class FeeDetailsContoller extends Controller
                     'deposit_fee' => $deposit_fee,
                     'due_fee' => intval($total_fee) - $deposit_fee,
                     'date' => $date,
-                    'time' => $time
+                    'time' => $time,
+                    'school_email'=>$school_email
                 ]);
                 $msg = " Fee Deposit Success";
                 $data = DB::table('feest')->get();
-                return view('deposit-fee', compact('email', 'data', 'msg'));
+                return view('deposit-fee', compact('email', 'data', 'msg','school_email'));
             }
 
         } else {
@@ -180,9 +194,10 @@ class FeeDetailsContoller extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
-            $data = DB::table('student_fee')->where('id', $request->id)->first();
-            $data1 = DB::table('feest')->get();
-            return view('fees-edit', compact('data', 'data1'));
+            $school_email = $request->school_email;
+            $data = DB::table('student_fee')->where('school_email',$school_email)->where('id', $request->id)->first();
+            $data1 = DB::table('feest')->where('school_email',$school_email)->get();
+            return view('fees-edit', compact('data', 'data1','school_email'));
         } else {
             return redirect('/error');
         }
@@ -193,6 +208,7 @@ class FeeDetailsContoller extends Controller
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
+            $school_email = $request->school_email;
             Student_Fee::where('id', $request->id)->update([
                 'stop_name' => $request->stop_name,
                 'total_fee' => $request->total_fee,
@@ -201,10 +217,10 @@ class FeeDetailsContoller extends Controller
                 'date' => $request->date,
                 'time' => $request->time
             ]);
-            $data = DB::table('student_fee')->where('id', $request->id)->first();
-            $data1 = DB::table('feest')->get();
+            $data = DB::table('student_fee')->where('school_email',$school_email)->where('id', $request->id)->first();
+            $data1 = DB::table('feest')->where('school_email',$school_email)->get();
             $msg = "Save Success";
-            return view('/fees-edit', compact('msg', 'data', 'data1'));
+            return view('/fees-edit', compact('msg', 'data', 'data1','school_email'));
         } else {
             return redirect('/error');
         }
@@ -214,10 +230,11 @@ class FeeDetailsContoller extends Controller
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
+            $school_email = $request->school_email;
             DB::table('student_fee')->where('id', $request->id)->delete();
-            $data = DB::table('student_fee')->where('st_email', $request->email)->get();
+            $data = DB::table('student_fee')->where('school_email',$school_email)->where('st_email', $request->email)->get();
             $email = $request->email;
-            return view('fee-details', compact('email', 'data'));
+            return view('fee-details', compact('email', 'data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -229,7 +246,8 @@ class FeeDetailsContoller extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $st_name = $request->input('st_name');
-            $data = DB::table('feest')->where('stop_name', $st_name)->first();
+            $school_email = $request->input('school_email');
+            $data = DB::table('feest')->where('school_email',$school_email)->where('stop_name', $st_name)->first();
             return response()->json($data);
         } else {
             return redirect('/error');

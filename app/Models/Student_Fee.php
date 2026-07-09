@@ -15,6 +15,7 @@ class Student_Fee extends Model
         'deposit_fee',
         'due_fee',
         'date',
-        'time'
+        'time',
+        'school_email'
     ];
 }

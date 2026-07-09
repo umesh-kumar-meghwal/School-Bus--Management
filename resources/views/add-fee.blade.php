@@ -16,12 +16,14 @@
             <button onclick="history.back()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition mb-4">
                 ← Back
             </button>
+            
             <h1 class="text-2xl font-bold text-slate-800">Add Fee By Stops</h1>
         </div>
 
         <!-- Form Start -->
         <form action="/add-fees" method="post" class="space-y-5">
             @csrf
+            <input type="hidden" name="school_email" value="{{ $school_email }}">
 
             <!-- Stop Selection Dropdown -->
             <div>

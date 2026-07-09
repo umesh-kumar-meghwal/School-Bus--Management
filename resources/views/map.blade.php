@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Live Bus Tracking</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -53,6 +54,7 @@
                 LIVE UPDATES
             </span>
         </div>
+        <input type="hidden" name="school_email" id="school_email" value="{{ $school_email }}">
 
         <!-- Heading details -->
         <div>
@@ -95,10 +97,11 @@
     <script>
         // Kota Center coordinates initialisation
         var map = L.map('map').setView([25.2138,75.8648], 13);
+        var school_email = document.getElementById("school_email").value;
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '© OpenStreetMap'
+            attribution: '{{$school_name}}'
         }).addTo(map);
 
         // Custom Bus Icon specs
@@ -115,6 +118,10 @@
             $.ajax({
                 url: '/bus-location',   // Laravel Route
                 type: 'GET',
+                data:{
+                    _token :"{{ csrf_token() }}",
+                    school_email :school_email
+                },
                 success: function(data) {
                     data.forEach(function(bus) {
                         let lat = parseFloat(bus.latitude);
@@ -154,6 +161,10 @@
             $.ajax({
                 url: '/stop-location',
                 type: 'GET',
+                data:{
+                    _token :"{{ csrf_token() }}",
+                    school_email :school_email
+                },
                 success: function(data) {
                     data.forEach(function(stop) {
                         L.circleMarker([stop.latitude, stop.longitude], {

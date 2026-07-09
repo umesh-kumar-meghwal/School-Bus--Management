@@ -6,17 +6,20 @@ use App\Models\Bus;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 class AddBusController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
-            $data = DB::table('route')->get();
-            $ddata = DB::table('driver')->get();
-            return view('addbus', compact('data', 'ddata'));
+            $school_email = $request->q;
+
+            $data = DB::table('route')->where('school_email',Crypt::decryptString($request->q))->get();
+            $ddata = DB::table('driver')->where('school_email',Crypt::decryptString($request->q))->get();
+            return view('addbus', compact('data', 'ddata', 'school_email'));
         } else {
             return redirect('/error');
         }
@@ -42,7 +45,8 @@ class AddBusController extends Controller
                     'available_seats' => $request->available_seats,
                     'status' => $request->status,
                     'latitude' => $request->latitude,
-                    'longitude' => $request->longitude
+                    'longitude' => $request->longitude,
+                    'school_email' => Crypt::decryptString($request->school_email)
                 ]);
 
 
@@ -55,8 +59,8 @@ class AddBusController extends Controller
 
                 $msg = "Bus Already Registered";
             }
-
-            return view('addbus', compact('msg', 'data', 'ddata'));
+            $school_email = $request->school_email;
+            return view('addbus', compact('msg', 'data', 'ddata','school_email'));
         } else {
             return redirect('/error');
         }
@@ -68,8 +72,9 @@ class AddBusController extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $name = $request->input('name');
+            $school_email = $request->input('school_email');
             if ($name != "select") {
-                $data = DB::table('driver')->where('name', $name)->first();
+                $data = DB::table('driver')->where('school_email',Crypt::decryptString($school_email))->where('name', $name)->first();
                 $phone = $data->phone;
                 return response()->json([
                     'reply' => $phone

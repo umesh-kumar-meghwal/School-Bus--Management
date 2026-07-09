@@ -20,9 +20,9 @@
         </div>
 
         <!-- Form Start -->
-        <form action="/student" method="post" class="space-y-6">
+        <form action="/students" method="post" class="space-y-6">
             @csrf
-
+<input type="hidden" name="school_email" value="{{ $school_email }}">
             <!-- Form Grid Layout (2 Columns on large screens, 1 Column on mobile) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 

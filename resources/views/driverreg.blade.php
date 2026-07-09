@@ -22,7 +22,7 @@
         <!-- Form Start -->
         <form action="/driverreg" method="post" class="space-y-5">
             @csrf
-
+            <input type="hidden" name="school_email" value="{{ $school_email }}">
             <!-- Name Field -->
             <div>
                 <label for="name" class="block text-sm font-medium text-slate-700 mb-1.5">Driver Name</label>

@@ -19,6 +19,8 @@ class LoginController extends Controller
         $password = $request->password;
 
         $data = DB::table('login')->where('email', $email)->first();
+        $data1 = DB::table('driver')->where('email',$email)->first();
+        $data2 = DB::table('student')->where('email',$email)->first();
 
         if ($data) {
             if ($data->password ==$password) {
@@ -26,22 +28,25 @@ class LoginController extends Controller
             if($data->usertype=='student'){
                 session(['user' => $data->email]);
                 session(['usertype' => $data->usertype]);
+                session(['school_email'=>$data2->school_email]);
 
                 return redirect('s-dashboard');
                 
             }else if($data->usertype=='driver') {
                 session(['user'=>$data->email]);
                 session(['usertype'=>$data->usertype]);
+                session(['school_email'=>$data1->school_email]);
 
                 return redirect('d-dashboard');
+
             }else if($data->usertype=='school'){
-                session(['usertype'=>$data->email]);
+                session(['user'=>$data->email]);
                 session(['usertype'=>$data->usertype]);
+                session(['school_email'=>$data->email]);
                 return redirect('school-dashboard');
             }else{
                 session(['user' => $data->email]);
                 session(['usertype' => $data->usertype]);
-    
                 return redirect('a-dashboard');
             }
 

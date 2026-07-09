@@ -15,6 +15,7 @@ class Bus extends Model
         'available_seats',
         'status',
         'latitude',
-        'longitude'
+        'longitude',
+        'school_email'
      ];
 }

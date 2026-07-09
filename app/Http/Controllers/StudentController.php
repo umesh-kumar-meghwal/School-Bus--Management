@@ -8,16 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Department;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 class StudentController extends Controller
 {
-    public function student()
+    public function student(Request $request)
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
-            $data = DB::table('department')->get();
-            return view('student', compact('data'));
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
+            $school_email = $request->q;
+            $data = DB::table('department')->where('school_email',Crypt::decryptString($school_email))->get();
+            return view('student', compact('data', 'school_email'));
         } else {
             return redirect('/error');
         }
@@ -26,13 +28,18 @@ class StudentController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $f = DB::table('login')->where('email', $request->email)->first();
             $data = DB::table('department')->get();
-
             if ($f) {
                 $msg = "Student Registered Already !";
             } else {
+                $usertype = 'student';
+                Login::create([
+                    'email' => $request->email,
+                    'password' => $request->password,
+                    'usertype' => $usertype
+                ]);
                 Student::create([
                     'name' => $request->name,
                     'father_name' => $request->father_name,
@@ -41,17 +48,13 @@ class StudentController extends Controller
                     'guardians_mobile' => $request->guardians_mobile,
                     'depart_name' => $request->depart_name,
                     'email' => $request->email,
-                    'address' => $request->address
-                ]);
-                $usertype = 'student';
-                Login::create([
-                    'email' => $request->email,
-                    'password' => $request->password,
-                    'usertype' => $usertype
+                    'address' => $request->address,
+                    'school_email' => Crypt::decryptString($request->school_email)
                 ]);
                 $msg = "Student Register Successfully";
             }
-            return view('student', compact('msg', 'data'));
+            $school_email = $request->school_email;
+            return view('student', compact('msg', 'data', 'school_email'));
         } else {
             return redirect('/error');
         }

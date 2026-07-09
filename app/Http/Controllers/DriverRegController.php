@@ -8,15 +8,17 @@ use Illuminate\Routing\Controller;
 use App\Models\Driver;
 use App\Models\Login;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 class DriverRegController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
-            return view('driverreg');
+            $school_email = $request->q;
+            return view('driverreg',compact('school_email'));
         } else {
             return redirect('/error');
         }
@@ -34,7 +36,8 @@ class DriverRegController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'phone' => $request->phone,
-                    'license_number' => $request->license
+                    'license_number' => $request->license,
+                    'school_email'=>Crypt::decryptString($request->school_email)
                 ]);
                 $u = 'driver';
                 Login::create([
@@ -46,7 +49,8 @@ class DriverRegController extends Controller
             } else {
                 $msg = "Driver Already Register";
             }
-            return view('driverreg', compact('msg'));
+            $school_email = $request->school_email;
+            return view('driverreg', compact('msg','school_email'));
         } else {
             return redirect('/error');
         }

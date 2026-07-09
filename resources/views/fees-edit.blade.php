@@ -26,6 +26,7 @@
             
             <!-- Hidden Input for ID -->
             <input type="hidden" value="{{ $data->id }}" name="id">
+            <input type="hidden" value="{{ $school_email }}" name="school_email">
 
             <!-- Stop Name Dropdown -->
             <div>

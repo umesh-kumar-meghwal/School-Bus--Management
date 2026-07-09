@@ -16,6 +16,7 @@ class Student extends Model
         'depart_name',
         'email',
         'address',
-        'photo'
+        'photo',
+        'school_email'
      ];
 }

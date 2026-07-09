@@ -8,7 +8,8 @@ class Fee extends Model
     public $timestamps =false;
     protected $fillable = [
         'stop_name',
-        'fee'
+        'fee',
+        'school_email'
     ];
    
 }

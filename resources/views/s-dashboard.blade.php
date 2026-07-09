@@ -29,6 +29,8 @@
                     
                     <h2 class="text-xs uppercase tracking-wider text-slate-400 font-bold">Student Portal</h2>
                     <h1 class="text-lg font-bold truncate" title="{{ $data->name }}">{{ $data->name }}</h1>
+                    <span class="inline-block text-lrg text-yellow-400 font-semibold mt-1">{{ $school_name }} </span>
+
                     <span class="inline-block text-xs text-indigo-400 font-semibold mt-1">{{ $data->depart_name }} Dept</span>
                 </div>
 
@@ -120,6 +122,7 @@
                             <!-- Hidden Fields (Required by original AJAX/JS) -->
                             <input type="hidden" id="route_name" value="{{ $data->route_name }}">
                             <input type="hidden" value="{{ $data->stop_name }}" name="st_name" id="t">
+                            <input type="hidden" value="{{ $school_email }}" id="school_email">
 
                             <div class="space-y-4">
                                 <div class="grid grid-cols-2 gap-4">
@@ -214,9 +217,11 @@
     <!-- jQuery & Original JavaScript API Fetch Logic -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
+        var school_email = document.getElementById("school_email").value;
         document.addEventListener("DOMContentLoaded", function() {
 
             var tElement = document.getElementById('t');
+            
             var t = tElement ? tElement.value : null;
             console.log(t);
             if(t){
@@ -225,7 +230,8 @@
                     type:'POST',
                     data:{
                         _token:'{{ csrf_token() }}',
-                        t:t
+                        t:t,
+                        school_email:school_email
                     },
                     success:function(data){
                         console.log(data);
@@ -245,7 +251,8 @@
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
-                        route_name: routeName
+                        route_name: routeName,
+                        school_email:school_email
                     },
                     success: function(data) {
                         console.log(data);

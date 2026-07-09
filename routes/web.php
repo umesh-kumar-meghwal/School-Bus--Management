@@ -30,6 +30,7 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\IpFetchController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolShowController;
+use App\Http\Controller\BestController;
 
 # Index home Page Are Show in the Front of project------------------------------------------------------
 
@@ -51,8 +52,8 @@ Route::get('/adminshow', [AdminShowController::class, 'show']);
 
 # Students Register And Show------------------------------------------------------------- 
 Route::get('/student', [StudentController::class, 'student']);
-Route::post('/student', [StudentController::class, 'store']);
-Route::get('/studentshow', [StudentShowController::class, 'show']);
+Route::post('/students', [StudentController::class, 'store']);
+Route::get('/studentshow', [StudentShowController::class, 'shows']);
 Route::post('/studentedit', [StudentEditController::class, 'show']);
 Route::get('/studentedit', [StudentEditController::class, 'shows']);
 Route::post('/studentedit1', [StudentEditController::class, 'change']);
@@ -68,7 +69,6 @@ Route::get('/a-dashboard', [AdashboardController::class, 'adashboard']);
 Route::get('/d-dashboard', [DDashboardController::class, 'ddashboard']);
 
 Route::get('/s-fee-details', [SdashboardController::class, 'sfee_details']);
-
 
 
 

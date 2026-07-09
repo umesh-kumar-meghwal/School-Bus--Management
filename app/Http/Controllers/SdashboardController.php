@@ -11,9 +11,11 @@ class SdashboardController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
+        $school_email = session('school_email');
         if (!empty(session('user')) && $usertype == "student") {
-            $data = DB::table('student')->where('email', $email)->first();
-            return view('s-dashboard', compact('data', 'email'));
+            $data = DB::table('student')->where('school_email',$school_email)->where('email', $email)->first();
+            $school_name = DB::table('school')->where('school_email',$school_email)->first()->school_name;
+            return view('s-dashboard', compact('data', 'email','school_name','school_email'));
         } else {
             return redirect('/error');
         }
@@ -23,9 +25,10 @@ class SdashboardController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
+        $school_email = session('school_email');
         if (!empty(session('user')) && $usertype == "student") {
             $email = session('user');
-            $data = DB::table('student_fee')->where('st_email', $email)->get();
+            $data = DB::table('student_fee')->where('school_email',$school_email)->where('st_email', $email)->get();
             return view('s-fee-details', compact('data'));
         } else {
             return redirect('/error');

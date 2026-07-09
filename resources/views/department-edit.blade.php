@@ -39,6 +39,7 @@
                     required
                 >
             </div>
+            <input type="hidden" name="school_email" value="{{ Crypt::encryptString($data->school_email) }}">
 
             <!-- Submit Button -->
             <div class="pt-2">

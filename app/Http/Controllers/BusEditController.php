@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\Bus;
 
 class BusEditController extends Controller
@@ -47,7 +48,9 @@ class BusEditController extends Controller
                 'available_seats' => $available_seats,
                 'status' => $status
             ]);
-            return redirect('/busshow');
+            $school_email = $request->school_email;
+            $data = DB::table('bus')->where('school_email', Crypt::decryptString($request->school_email))->get();
+            return view('busshow', compact('data','school_email'));
         } else {
             return redirect('/error');
         }
@@ -59,7 +62,9 @@ class BusEditController extends Controller
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $id = $request->id;
             Bus::where('id', $id)->delete();
-            return redirect('/busshow');
+            $school_email = $request->school_email;
+            $data = DB::table('bus')->where('school_email', Crypt::decryptString($request->school_email))->get();
+            return view('busshow', compact('data','school_email'));
         } else {
             return redirect('/error');
         }

@@ -6,16 +6,19 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+
 use App\Models\Student;
 
 class DepartmentController extends Controller
 {
-    public function add_depart()
+    public function add_depart(Request $request)
     {
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
-            return view('add-department');
+            $school_email = $request->q;
+            return view('add-department', compact('school_email'));
         } else {
             return redirect('/error');
         }
@@ -26,22 +29,25 @@ class DepartmentController extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $depart_name = $request->depart_name;
+            $school_email = $request->school_email;
             Department::create([
-                'depart_name' => $depart_name
+                'depart_name' => $depart_name,
+                'school_email' => Crypt::decryptString($school_email)
             ]);
             $msg = "Department Add Successfully";
-            return view('add-department', compact('msg'));
+            return view('add-department', compact('msg', 'school_email'));
         } else {
             return redirect('/error');
         }
     }
-    public function show()
+    public function show(Request $request)
     {
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
-            $data = DB::table('department')->get();
-            return view('show-department', compact('data'));
+            $school_email = $request->q;
+            $data = DB::table('department')->where('school_email', Crypt::decryptString($school_email))->get();
+            return view('show-department', compact('data', 'school_email'));
         } else {
             return redirect('/error');
         }
@@ -62,10 +68,12 @@ class DepartmentController extends Controller
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
+            $school_email = $request->school_email;
             department::where('id', $request->id)->update([
                 'depart_name' => $request->depart_name
             ]);
-            return redirect('/show-depart');
+            $data = DB::table('department')->where('school_email', Crypt::decryptString($school_email))->get();
+            return view('show-department', compact('data', 'school_email'));
         } else {
             return redirect('/error');
         }
@@ -76,9 +84,11 @@ class DepartmentController extends Controller
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $depart = department::where('id', $request->id)->first();
-            student::where('depart_name', $depart->depart_name)->update(['depart_name' => null]);
+            $school_email = $request->school_email;
+            student::where('school_email', Crypt::decryptString($school_email))->where('depart_name', $depart->depart_name)->update(['depart_name' => null]);
             $depart->delete();
-            return redirect('/show-depart');
+            $data = DB::table('department')->where('school_email', Crypt::decryptString($school_email))->get();
+            return view('show-department', compact('data', 'school_email'));
         } else {
             return redirect('/error');
         }

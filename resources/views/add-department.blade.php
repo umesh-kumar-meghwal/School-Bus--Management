@@ -22,7 +22,7 @@
         <!-- Form Start -->
         <form action="/add-departs" method="post" class="space-y-5">
             @csrf
-
+            <input type="hidden" name="school_email" value="{{ $school_email }}">
             <!-- Department Name Field -->
             <div>
                 <label for="depart_name" class="block text-sm font-medium text-slate-700 mb-1.5">Department Name</label>

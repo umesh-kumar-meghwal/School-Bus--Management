@@ -19,7 +19,6 @@
                 ← Back
             </button>
             <h1 class="text-2xl font-bold text-slate-800">Assign Bus</h1>
-            <p class="text-sm text-slate-500 mt-1">Student ke liye munasib bus route aur stop ka intekhab karein.</p>
         </div>
 
         <!-- Form Start -->
@@ -28,6 +27,7 @@
             
             <!-- Hidden Input for Student Email -->
             <input type="hidden" value="{{ $email }}" name="email">
+            <input type="hidden" value="{{ $school_email }}" name="school_email" id="school_email">
 
             <!-- Route Select Dropdown -->
             <div>
@@ -105,14 +105,15 @@
     <script>
         $('#routeSelect').on('change', function() {
             var routeName = $(this).val(); 
-
+            var school_email = document.getElementById("school_email").value;
             if (routeName) {
                 $.ajax({
                     url: '/stop-fetch',
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}', 
-                        route_name: routeName
+                        route_name: routeName,
+                        school_email :school_email
                     },
                     success: function(data) {
                         $('#stopSelect').empty();

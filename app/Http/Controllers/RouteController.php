@@ -6,15 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Route;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 class RouteController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
         $email = session('user');
         $usertype = session('usertype');
         if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
-            return view('addroute');
+            $school_email =$request->q;
+            return view('addroute',compact('school_email'));
         } else {
             return redirect('/error');
         }
@@ -34,10 +36,12 @@ class RouteController extends Controller
                 'end_time' => $request->end_time,
                 'distance' => $request->distance,
                 'estimated_time' => $request->estimated_time,
-                'status' => $request->status
+                'status' => $request->status,
+                'school_email'=>Crypt::decryptString($request->school_email)
             ]);
             $msg = "Route Successfully Registered";
-            return view('addroute', compact('msg'));
+            $school_email = $request->school_email;
+            return view('addroute', compact('msg','school_email'));
         } else {
             return redirect('/error');
         }

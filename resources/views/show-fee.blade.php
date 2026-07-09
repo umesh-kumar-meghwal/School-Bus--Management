@@ -17,7 +17,13 @@
                 <button onclick="history.back()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition mb-2">
                     ← Back
                 </button>
+                
                 <h1 class="text-2xl font-bold text-slate-800">Show Fee Structure</h1>
+            </div>
+            <div>
+                <button onclick="window.location.href='/add-fee?q={{ $school_email }}'" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition">
+                    + Add New Fee
+                </button>
             </div>
         </div>
 
@@ -57,6 +63,7 @@
                                         <form action="/fee-edit" method="post" class="inline">
                                             @csrf
                                             <input type="hidden" value="{{ $d->id }}" name="id">
+                                            <input type="hidden" value="{{ $school_email }}" name="school_email">
                                             <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-md text-xs font-semibold transition shadow-sm">
                                                 Edit
                                             </button>
@@ -66,6 +73,7 @@
                                         <form action="/fee-delete" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this fee structure?')">
                                             @csrf
                                             <input type="hidden" value="{{ $d->id }}" name="id">
+                                            <input type="hidden" value="{{ $school_email }}" name="school_email">
                                             <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-md text-xs font-semibold transition shadow-sm">
                                                 Delete
                                             </button>

@@ -9,7 +9,8 @@ class Department extends Model
     public $timestamps =false;
 
     protected $fillable = [
-        'depart_name'
+        'depart_name',
+        'school_email'
     ];
 
 }

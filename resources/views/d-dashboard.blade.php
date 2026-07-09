@@ -23,12 +23,17 @@
                         D
                     </div>
                     <h2 class="text-xs uppercase tracking-wider text-slate-400 font-bold">Driver Portal</h2>
+
                     <h1 class="text-lg font-bold truncate" title="{{ $data->name }}">{{ $data->name }}</h1>
                     <span class="inline-block text-xs text-indigo-400 font-semibold mt-1">License: {{ $data->license_number }}</span>
                 </div>
 
                 <!-- Driver Contact & Info details -->
                 <div class="space-y-4 text-xs text-slate-400 mb-8">
+                    <div>
+                        <span class="block uppercase font-bold tracking-wide">School Name</span>
+                        <span class="text-slate-200 font-medium break-all">{{ $school_name }}</span>
+                    </div>
                     <div>
                         <span class="block uppercase font-bold tracking-wide">Driver Email</span>
                         <span class="text-slate-200 font-medium break-all">{{ $data->email }}</span>

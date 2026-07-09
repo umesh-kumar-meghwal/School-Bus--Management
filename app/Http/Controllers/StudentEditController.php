@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\Student;
 
 class StudentEditController extends Controller
@@ -17,12 +18,11 @@ class StudentEditController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $email = $request->email;
-
             $data = DB::table('student')->where('email', $email)->first();
             $datas = DB::table('department')->get();
-            return view('studentedit', compact('data','datas'));
+            return view('studentedit', compact('data', 'datas'));
         } else {
             return redirect('/error');
         }
@@ -36,7 +36,7 @@ class StudentEditController extends Controller
     {
         $email = session('user');
         $usertype = session('usertype');
-        if (!empty($email) && $usertype == 'admin' || $usertype =='school') {
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
             $name = $request->name;
             $father_name = $request->father_name;
             $mother_name = $request->mother_name;
@@ -45,17 +45,18 @@ class StudentEditController extends Controller
             $depart_name = $request->depart_name;
             $email = $request->email;
             $address = $request->address;
-            echo $email;
             Student::where('email', $email)->update([
                 'name' => $name,
-                'father_name' =>$father_name,
+                'father_name' => $father_name,
                 'mother_name' => $mother_name,
                 'mobile' => $mobile,
-                'guardians_mobile' =>$guardians_mobile,
-                'depart_name'=>$depart_name,
+                'guardians_mobile' => $guardians_mobile,
+                'depart_name' => $depart_name,
                 'address' => $address
             ]);
-            return redirect('studentshow');
+            $school_email = $request->school_email;
+            $data = DB::table('student')->where('school_email', Crypt::decryptString($request->school_email))->get();
+            return view('studentshow',compact('data','school_email'));
         } else {
             return redirect('/error');
         }

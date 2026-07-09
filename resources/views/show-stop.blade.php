@@ -22,7 +22,7 @@
 
             <!-- Add New Stop Button -->
             <div>
-                <button onclick="window.location.href='/add-stop'" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition">
+                <button onclick="window.location.href='/add-stop?q={{ $school_email }}'" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition">
                     + Add New Stop
                 </button>
             </div>
@@ -82,6 +82,7 @@
                                         <form action="/edit-stop" method="post" class="inline">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $d->id }}">
+                                            <input type="hidden" name="school_email" value="{{ $school_email }}">
                                             <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-md text-xs font-semibold transition shadow-sm">
                                                 Edit
                                             </button>
@@ -91,6 +92,7 @@
                                         <form action="/delete-stop" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this stop?')">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $d->id }}">
+                                            <input type="hidden" name="school_email" value="{{ $school_email }}">
                                             <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-md text-xs font-semibold transition shadow-sm">
                                                 Delete
                                             </button>
@@ -115,8 +117,7 @@
                     </svg>
                 </div>
                 <h3 class="text-base font-semibold text-slate-800">No Stops Registered</h3>
-                <p class="text-sm text-slate-500 mt-1 mb-6">Database me filhal koi bus stop dastyab nahi hai.</p>
-                <button onclick="window.location.href='/add-stop'" class="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow transition">
+                <button onclick="window.location.href='/add-stop?q={{ $school_email }}'" class="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow transition">
                     + Register First Stop
                 </button>
             </div>

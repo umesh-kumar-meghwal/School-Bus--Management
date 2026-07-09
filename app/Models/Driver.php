@@ -11,7 +11,8 @@ class Driver extends Model
         'name',
         'email',
         'phone',
-        'license_number'
+        'license_number',
+        'school_email',
 
     ];
 }

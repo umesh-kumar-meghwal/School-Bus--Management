@@ -61,7 +61,7 @@
                 </button>
             </div>
 
-            <!-- Validation Session Alerts (Conditional Rendering inside the form) -->
+            <!-- Validation Session Alerts -->
             @if (session('error') == 'error')
                 <!-- Error: Email & Password Not Match -->
                 <div class="p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2.5">
@@ -81,9 +81,17 @@
                     </svg>
                     <div>
                         <h4 class="text-xs font-bold text-rose-800">Account Alert</h4>
+                        <p class="text-[11px] text-rose-700 mt-0.5">This Email is not registered in our system.</p>
                     </div>
                 </div>
             @endif
+
+            <!-- Switching/Navigation Link (Added Here) -->
+            <div class="mt-6 text-center text-xs text-slate-500 border-t border-slate-100 pt-5">
+                Don't have an account yet? 
+                <!-- Replace /school-register with your actual registration routing path if needed -->
+                <a href="/school-reg" class="text-indigo-600 hover:text-indigo-700 font-semibold transition">Register here</a>
+            </div>
 
         </form>
         <!-- Form End -->

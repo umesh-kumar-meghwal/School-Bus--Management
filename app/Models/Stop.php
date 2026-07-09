@@ -16,6 +16,7 @@ class Stop extends Model
         'pickup_time',
         'drop_time',
         'latitude',
-        'longitude'
+        'longitude',
+        'school_email',
     ];
 }

@@ -22,7 +22,7 @@
 
             <!-- Driver Register Button (Top-Right Action) -->
             <div>
-                <button onclick="window.location.href='/driverreg'" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition">
+                <button onclick="window.location.href='/driverreg?q={{ $school_email }}'" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition">
                     + Register New Driver
                 </button>
             </div>
@@ -76,6 +76,7 @@
                                         <form action="/driverdelete" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this driver record?')">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $d->id }}">
+                                            <input type="hidden" name="school_email" value="{{ Crypt::encryptString($d->school_email) }}">
                                             <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-md text-xs font-semibold transition shadow-sm">
                                                 Delete
                                             </button>
@@ -99,7 +100,7 @@
                     </svg>
                 </div>
                 <h3 class="text-base font-semibold text-slate-800">No Drivers Registered</h3>
-                <button onclick="window.location.href='/driverreg'" class="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow transition">
+                <button onclick="window.location.href='/driverreg?q={{ $school_email }}'" class="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow transition">
                     + Register First Driver
                 </button>
             </div>

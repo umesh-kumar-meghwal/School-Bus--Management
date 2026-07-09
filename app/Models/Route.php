@@ -14,6 +14,7 @@ class Route extends Model
         'end_time',
         'distance',
         'estimated_time',
-        'status'
+        'status',
+        'school_email'
     ];
 }

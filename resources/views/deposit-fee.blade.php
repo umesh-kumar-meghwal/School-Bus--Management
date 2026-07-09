@@ -29,6 +29,7 @@
             <input type="hidden" value="{{ $email }}" name="email">
             <input type="hidden" name="date" value="" id="date">
             <input type="hidden" name="time" value="" id="time">
+            <input type="hidden" name="school_email" value="{{ $school_email }}" id="school_email">
 
             <!-- Bus Stop Selection -->
             <div>
@@ -78,6 +79,7 @@
                     >
                 </div>
             </div>
+            
 
             <!-- Submit Button -->
             <div class="pt-2">
@@ -124,6 +126,7 @@
     <!-- Original AJAX/jQuery Script -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
+        var school_email = document.getElementById('school_email').value;
         document.getElementById('st_name').onchange = function() {
             var st = this.value;
             $.ajax({
@@ -131,7 +134,8 @@
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    st_name: st
+                    st_name: st,
+                    school_email:school_email
                 },
                 success: function(data) {
                     document.getElementById('t_fee').value = data.fee + 'rs';
@@ -153,7 +157,8 @@
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    st_name: st
+                    st_name: st,
+                    school_email:school_email
                 },
                 success: function(data) {
                     document.getElementById('t_fee').value = data.fee + 'rs';

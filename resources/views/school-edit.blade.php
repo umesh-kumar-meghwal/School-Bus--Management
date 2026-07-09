@@ -109,7 +109,7 @@
             let school_email = document.getElementById('school_email').value;
             let phone = document.getElementById('phone').value;
             let address = document.getElementById('address').value;
-            
+
             $.ajax({
                 url: "/school-edits",
                 type: "POST",
@@ -122,7 +122,7 @@
                 },
                 success: function(data) {
                     console.log(data.message);
-                    document.getElementById('msg').style.display="block";
+                    document.getElementById('msg').style.display = "block";
                 },
                 error: function(xhr) {
                     console.log("Error Details:", xhr.responseText);
