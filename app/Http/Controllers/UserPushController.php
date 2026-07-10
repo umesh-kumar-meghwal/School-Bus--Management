@@ -107,15 +107,14 @@ class UserPushController extends Controller
         $body = $request->input('content');
         $st_email = $request->input('st_email');
         $decryptedSchoolEmail = Crypt::decryptString($school_email);
-        $decryptedStEmail = Crypt::decryptString($st_email);
-        $student_name = DB::table('student')->where('school_email',$decryptedSchoolEmail)->where('email',$decryptedStEmail)->first()->name;
+        $student_name = DB::table('student')->where('school_email',$decryptedSchoolEmail)->where('email',$st_email)->first()->name;
         $body = "Dear ".$student_name." ❤ ,".$body;
         $this->student_push($st_email, $title, $body);
         Notification::created([
             'title' => $title,
             'content' => $body,
             'school_email' => $decryptedSchoolEmail,
-            'user_email' => $decryptedStEmail
+            'user_email' => $st_email
         ]);
         $msg = ["msg" => "success"];
         return response()->json($msg);
