@@ -137,7 +137,7 @@ class UserPushController extends Controller
     {
         $school_email = Crypt::decryptString($request->shq);
         $st_email = $request->sq;
-        $data = DB::table('notification')->where('school_email', $school_email)->where('user_email', $st_email)->get();
+        $data = DB::table('notification')->where('school_email', $school_email)->where('user_email', $st_email)->orderBy('id', 'desc')->get();
         Notification::where('school_email', $school_email)->where('user_email', $st_email)->update([
             'checks'=>1
         ]);
