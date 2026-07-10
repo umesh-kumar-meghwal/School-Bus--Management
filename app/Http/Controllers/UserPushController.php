@@ -96,6 +96,10 @@ class UserPushController extends Controller
         $msg = ["msg" => "success"];
         return response()->json($msg);
     }
+
+    public function hh(){
+        DB::table('notification')->delete();
+    }
     
     public function student_push($st_email, $title, $body)
     {
@@ -103,18 +107,14 @@ class UserPushController extends Controller
         $restKey = env('ONESIGNAL_REST_API_KEY');
         
 
-        $response = Http::withHeaders([
+         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $restKey,
             'Content-Type' => 'application/json',
         ])->post('https://onesignal.com/api/v1/notifications', [
             'app_id' => $appId,
-            'include_external_user_ids' => $st_email,
-            'headings' => [
-                'en' => $title,
-            ],
-            'contents' => [
-                'en' => $body,
-            ],
+            'include_external_user_ids' => [$st_email], // Updated Clean Email
+            'headings' => ['en' => $title],
+            'contents' => ['en' => $body],
             'android_sound' => 'bus_horn',
         ]);
 

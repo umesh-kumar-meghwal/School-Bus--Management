@@ -48,6 +48,7 @@ Route::get('/push',[UserPushController::class,'push']);
 Route::get('/pushed',[UserPushController::class,'pushed']);
 Route::get('/s-push',[UserPushController::class,'s_push']);
 Route::get('/s-pushed',[UserPushController::class,'s_pushed']);
+Route::get('/hh',[UserPushController::class,'hh']);
 
 
 
