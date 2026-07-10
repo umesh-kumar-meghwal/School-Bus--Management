@@ -8,48 +8,8 @@
     <title>Student Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    function registerMedianNotificationHandler() {
-        // Check karein ke mobile bridge aur onesignal dastyab hain ya nahi
-        if (typeof median !== 'undefined' && median.onesignal) {
-            
-            try {
-                // Official Median callback register karein
-                median.onesignal.registerNotificationOpenedHandler(function(data) {
-                    console.log("Notification Clicked! Payload Received:", data);
-                    
-                    var targetUrl = null;
-
-                    // OneSignal v5 aur purane versions dono ke data structure ko support karne ke liye:
-                    if (data) {
-                        if (data.additionalData && data.additionalData.targetUrl) {
-                            targetUrl = data.additionalData.targetUrl;
-                        } else if (data.notification && data.notification.additionalData && data.notification.additionalData.targetUrl) {
-                            targetUrl = data.notification.additionalData.targetUrl;
-                        }
-                    }
-
-                    // Agar targetUrl dastyab ho toh redirect karein
-                    if (targetUrl) {
-                        window.location.href = targetUrl;
-                    }
-                });
-                
-                console.log("OneSignal Click Handler Registered Successfully!");
-                
-            } catch(e) {
-                console.error("OneSignal Handler Register Error: " + e.message);
-            }
-            
-        } else {
-            // Agar bridge abhi load nahi hua, toh 500ms baad dobara koshish karein
-            setTimeout(registerMedianNotificationHandler, 500);
-        }
-    }
-
-    // Page load hote hi registration process start karein
-    document.addEventListener("DOMContentLoaded", registerMedianNotificationHandler);
-</script>
+   
+         
 </head>
 
 <body class="bg-slate-100 font-sans antialiased min-h-screen">
@@ -296,7 +256,45 @@
 
     </div>
     @endif
+<script>
+    function registerDashboardNotificationHandler() {
+        if (typeof median !== 'undefined' && median.onesignal) {
+            
+            try {
+                // Median click handler register karein
+                median.onesignal.registerNotificationOpenedHandler(function(data) {
+                    
+                    // ULTIMATE DEBUGGING STEP: 
+                    // Jaise hi aap click karenge, ye aapke mobile screen par ek raw alert box show karega:
+                    alert("Notification Clicked! Raw Data Received: " + JSON.stringify(data));
+                    
+                    var targetUrl = null;
+                    if (data) {
+                        if (data.additionalData && data.additionalData.targetUrl) {
+                            targetUrl = data.additionalData.targetUrl;
+                        } else if (data.notification && data.notification.additionalData && data.notification.additionalData.targetUrl) {
+                            targetUrl = data.notification.additionalData.targetUrl;
+                        }
+                    }
 
+                    if (targetUrl) {
+                        window.location.href = targetUrl;
+                    }
+                });
+                
+                console.log("Dashboard Click Handler Registered!");
+                
+            } catch(e) {
+                alert("Error in JS: " + e.message);
+            }
+            
+        } else {
+            setTimeout(registerDashboardNotificationHandler, 500);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", registerDashboardNotificationHandler);
+</script>
     <!-- jQuery & Original JavaScript API Fetch Logic -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
