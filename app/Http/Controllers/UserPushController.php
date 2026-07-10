@@ -118,7 +118,7 @@ class UserPushController extends Controller
         DB::table('notification')->delete();
     }
 
-    public function student_push($st_email, $title, $body, $targetUrl=null)
+    public function student_push($st_email, $title, $body, $url)
     {
         $appId = env('ONESIGNAL_APP_ID');
         $restKey = env('ONESIGNAL_REST_API_KEY');
@@ -130,9 +130,9 @@ class UserPushController extends Controller
             'android_sound' => 'bus_horn',
         ];
 
-       if ($targetUrl) {
+       if ($url) {
         $payload['data'] = [
-            'targetUrl' => $targetUrl
+            'targetUrl' => $url
         ];
     }
 
