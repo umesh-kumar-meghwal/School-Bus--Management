@@ -76,6 +76,27 @@ class UserPushController extends Controller
         return view('push', compact('school_email', 'st_email'));
     }
 
+
+    public function s_pushed(Request $request)
+    {
+        $school_email = $request->input('school_email');
+        $title = $request->input('title');
+        $body = $request->input('content');
+        $st_email = $request->input('st_email');
+        $decryptedSchoolEmail = Crypt::decryptString($school_email);
+        $student_name = DB::table('student')->where('school_email',$decryptedSchoolEmail)->where('email',$st_email)->first()->name;
+        $body = "Dear ".$student_name." ❤ ,".$body;
+        $this->student_push($st_email, $title, $body);
+        Notification::created([
+            'title' => $title,
+            'content' => $body,
+            'school_email' => $decryptedSchoolEmail,
+            'user_email' => $st_email
+        ]);
+        $msg = ["msg" => "success"];
+        return response()->json($msg);
+    }
+    
     public function student_push($st_email, $title, $body)
     {
         $appId = env('ONESIGNAL_APP_ID');
@@ -98,25 +119,5 @@ class UserPushController extends Controller
         ]);
 
         return $response->json();
-    }
-
-    public function s_pushed(Request $request)
-    {
-        $school_email = $request->input('school_email');
-        $title = $request->input('title');
-        $body = $request->input('content');
-        $st_email = $request->input('st_email');
-        $decryptedSchoolEmail = Crypt::decryptString($school_email);
-        $student_name = DB::table('student')->where('school_email',$decryptedSchoolEmail)->where('email',$st_email)->first()->name;
-        $body = "Dear ".$student_name." ❤ ,".$body;
-        $this->student_push($st_email, $title, $body);
-        Notification::created([
-            'title' => $title,
-            'content' => $body,
-            'school_email' => $decryptedSchoolEmail,
-            'user_email' => $st_email
-        ]);
-        $msg = ["msg" => "success"];
-        return response()->json($msg);
     }
 }

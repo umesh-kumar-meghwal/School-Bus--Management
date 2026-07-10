@@ -56,7 +56,7 @@
 
             <!-- Logout Link -->
             <div class="pt-6 border-t border-slate-800">
-                <a href="logout" class="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white rounded-xl text-xs font-bold transition duration-150">
+                <a href="logout" onclick="logoutOneSignal(event)" class="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white rounded-xl text-xs font-bold transition duration-150">
                     Logout
                 </a>
             </div>
@@ -360,3 +360,70 @@
 
     document.addEventListener("DOMContentLoaded", registerOneSignalUser);
 </script>
+
+Aapne ek behad zaroori aur realistic security issue (problem) pakda hai! Yeh aam
+taur par shared devices (mislan ek hi mobile par jab baari-baari behan aur bhai
+login karte hain) par zaroor pesh aata hai.
+
+Yeh Kyun Hota Hai?
+
+OneSignal (v5) me jab ek user login karta hai, toh OneSignal us device ko us
+user ke sath bind (jod) deta hai. Lekin jab woh logout karta hai, toh app level
+par toh logout ho jata hai, par OneSignal server ko nahi pata chalta ke purana
+user ja chuka hai. Is wajah se jab dusra user login karta hai, toh OneSignal
+purane aur naye dono users ko ek hi device par notifications bhejne lagta hai.
+
+Iska Hal: OneSignal logout() Method
+
+Isko theek karne ke liye, jaise hi user aapke system me "Logout" par click
+karega, hume pehle mobile app ke andar se median.onesignal.logout() call karna
+hoga (taake OneSignal server se us user ki email unlink ho jaye), aur uske baad
+Laravel ka logout route open hoga.
+
+Niche iska asaan aur mukammal tarika bataya gaya hai:
+
+Step 1: Apne Dashboards par Logout Button ko is Tarah Update Karein
+
+Apne Student, Admin, aur Driver dashboards par jahan bhi Logout ka button ya
+link hai, use is tarah update karein:
+
+<!-- Logout Link with custom onclick click listener -->
+<a href="/logout" onclick="logoutOneSignal(event)" class="text-red-500 hover:text-red-600 font-bold">
+    Logout
+</a>
+
+(Note: Agar aapka button <button> tag me hai, toh is tarah likhein):
+
+<button onclick="logoutOneSignal(event)" class="bg-red-600 text-white px-4 py-2 rounded">
+    Logout
+</button>
+
+Step 2: Dashboard me niche yeh JavaScript Code add kar dein
+
+Apne dashboards ke JS block me is logoutOneSignal function ko shamil kar dein:
+
+<script>
+    function logoutOneSignal(event) {
+        if (typeof median !== 'undefined' && median.onesignal) {
+            
+            event.preventDefault(); 
+            
+            try {
+                if (typeof median.onesignal.logout === 'function') {
+                    median.onesignal.logout();
+                    console.log("OneSignal user unlinked successfully.");
+                }
+            } catch (e) {
+                console.error("OneSignal Logout Error: " + e.message);
+            }
+
+            setTimeout(function() {
+                window.location.href = "/logout"; 
+            }, 200);
+            
+        } else {
+            window.location.href = "/logout";
+        }
+    }
+</script>
+
