@@ -62,6 +62,24 @@
     // Page load hote hi registration process start karein
     document.addEventListener("DOMContentLoaded", registerMedianNotificationHandler);
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Check karein ke kya user mobile app ke andar dakhil hai ya normal browser par
+        var isInsideApp = navigator.userAgent.indexOf('GoNative') > -1 || 
+                          navigator.userAgent.indexOf('Median') > -1 || 
+                          (typeof median !== 'undefined');
+
+        // 2. Agar user App ke andar hai:
+        if (isInsideApp) {
+            var downloadSection = document.getElementById('download-app-section');
+            if (downloadSection) {
+                // Tailwind ki "hidden" class se button ko hide (chupa) kar dein
+                downloadSection.classList.add('hidden');
+                console.log("App detected: Download button hidden.");
+            }
+        }
+    });
+</script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
