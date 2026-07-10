@@ -8,16 +8,47 @@
     <title>Student Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-    function median_onesignal_notification_opened(data) {
-        console.log("Notification Data:", data);
-        if (data && data.additionalData && data.additionalData.targetUrl) {
-            window.location.href = data.additionalData.targetUrl;
+  <script>
+    function registerMedianNotificationHandler() {
+        // Check karein ke mobile bridge aur onesignal dastyab hain ya nahi
+        if (typeof median !== 'undefined' && median.onesignal) {
+            
+            try {
+                // Official Median callback register karein
+                median.onesignal.registerNotificationOpenedHandler(function(data) {
+                    console.log("Notification Clicked! Payload Received:", data);
+                    
+                    var targetUrl = null;
+
+                    // OneSignal v5 aur purane versions dono ke data structure ko support karne ke liye:
+                    if (data) {
+                        if (data.additionalData && data.additionalData.targetUrl) {
+                            targetUrl = data.additionalData.targetUrl;
+                        } else if (data.notification && data.notification.additionalData && data.notification.additionalData.targetUrl) {
+                            targetUrl = data.notification.additionalData.targetUrl;
+                        }
+                    }
+
+                    // Agar targetUrl dastyab ho toh redirect karein
+                    if (targetUrl) {
+                        window.location.href = targetUrl;
+                    }
+                });
+                
+                console.log("OneSignal Click Handler Registered Successfully!");
+                
+            } catch(e) {
+                console.error("OneSignal Handler Register Error: " + e.message);
+            }
+            
+        } else {
+            // Agar bridge abhi load nahi hua, toh 500ms baad dobara koshish karein
+            setTimeout(registerMedianNotificationHandler, 500);
         }
     }
-    function gonative_onesignal_notification_opened(data) {
-        median_onesignal_notification_opened(data);
-    }
+
+    // Page load hote hi registration process start karein
+    document.addEventListener("DOMContentLoaded", registerMedianNotificationHandler);
 </script>
 </head>
 
