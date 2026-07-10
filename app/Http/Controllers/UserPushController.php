@@ -97,7 +97,6 @@ class UserPushController extends Controller
 
         $rawUrl = url("https://school-bus-tracking-management.up.railway.app/notification?sq=" . $st_email . "&shq=" . $school_email);
         $url = str_replace('http://', 'https://', $rawUrl);
-         dd($url);
 
 
         $this->student_push($st_email, $title, $body, $url);
