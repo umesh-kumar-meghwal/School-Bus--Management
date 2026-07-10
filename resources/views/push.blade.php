@@ -4,6 +4,7 @@
 <p>Enter the Content <textarea type="text" name="content" id="content"></textarea></p>
 <input type="hidden" name="school_email" value="{{ $school_email }}" id="school_email">
 <button onclick="myfunction()">Push</button>
+<p id="show"></p>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script>
@@ -23,7 +24,7 @@
             },
             success:function(data)
             {
-                console.log(data.msg);
+                document.getElementById('show').innerHTML=data.msg;
             }
         })
     }

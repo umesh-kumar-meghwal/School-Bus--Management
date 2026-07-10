@@ -5,6 +5,7 @@
 <input type="hidden" name="school_email" value="{{ $school_email }}" id="school_email"/>
 <input type="hidden" name="st_email" value="{{ $st_email }}" id="st_email"/>
 <button onclick="myfunction()">Push</button>
+<p id="show"></p>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script>
@@ -26,7 +27,7 @@
             },
             success:function(data)
             {
-                console.log(data.msg);
+                document.getElementById('show').innerHTML=data.msg;
             }
         })
     }
