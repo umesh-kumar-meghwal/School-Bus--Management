@@ -78,7 +78,7 @@ class UserPushController extends Controller
     {
         $school_email = $request->shq;
         $st_email = $request->sq;
-        $data = DB::table('notification')->where('school_email', Crypt::decryptString($school_email))->where('user_email', $st_email)->get();
+        $data = DB::table('notification')->where('school_email', Crypt::decryptString($school_email))->where('user_email', $st_email)->orderBy('id', 'desc')->get();
         return view('s-push', compact('school_email', 'st_email', 'data'));
     }
 
@@ -94,7 +94,8 @@ class UserPushController extends Controller
         $decryptedSchoolEmail = Crypt::decryptString($school_email);
         $student_name = DB::table('student')->where('school_email', $decryptedSchoolEmail)->where('email', $st_email)->first()->name;
         $body = "Dear " . $student_name . " ❤ ," . $body;
-        $this->student_push($st_email, $title, $body);
+        $url = "/notification?sq=".$st_email."&shq=".$school_email;
+        $this->student_push($st_email, $title, $body,$url);
         Notification::create([
             'title' => $title,
             'content' => $body,
@@ -113,22 +114,26 @@ class UserPushController extends Controller
         DB::table('notification')->delete();
     }
 
-    public function student_push($st_email, $title, $body)
+    public function student_push($st_email, $title, $body,$url)
     {
         $appId = env('ONESIGNAL_APP_ID');
         $restKey = env('ONESIGNAL_REST_API_KEY');
+        $payload = [
+            'app_id' => $appId,
+            'include_external_user_ids' => [$st_email],
+            'headings' => ['en' => $title],
+            'contents' => ['en' => $body],
+            'android_sound' => 'bus_horn',
+        ];
 
+        if ($url) {
+            $payload['url'] = $url;
+        }
 
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $restKey,
             'Content-Type' => 'application/json',
-        ])->post('https://onesignal.com/api/v1/notifications', [
-            'app_id' => $appId,
-            'include_external_user_ids' => [$st_email], // Updated Clean Email
-            'headings' => ['en' => $title],
-            'contents' => ['en' => $body],
-            'android_sound' => 'bus_horn',
-        ]);
+        ])->post('https://onesignal.com/api/v1/notifications', $payload);
 
         return $response->json();
     }
@@ -139,7 +144,7 @@ class UserPushController extends Controller
         $st_email = $request->sq;
         $data = DB::table('notification')->where('school_email', $school_email)->where('user_email', $st_email)->orderBy('id', 'desc')->get();
         Notification::where('school_email', $school_email)->where('user_email', $st_email)->update([
-            'checks'=>1
+            'checks' => 1
         ]);
         return view('notification', compact('data'));
     }
