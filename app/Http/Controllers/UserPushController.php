@@ -74,6 +74,18 @@ class UserPushController extends Controller
         return response()->json($msg);
     }
 
+    public function delete_push(Request $request)
+    {
+        $id = $request->id;
+        $school_email = $request->school_email;
+        $st_email = $request->user_email;
+        $data = DB::table('notification')->where('school_email',$school_email)->where('user_email', $st_email)->orderBy('id', 'desc')->get();
+        DB::table('notification')->where('id',$id)->delete();
+        return view('s-push', compact('school_email', 'st_email', 'data'));
+
+
+    }
+
     public function s_push(Request $request)
     {
         $school_email = $request->shq;

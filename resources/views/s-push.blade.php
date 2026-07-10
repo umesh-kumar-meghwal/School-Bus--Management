@@ -96,6 +96,7 @@
                                     <th scope="col" class="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Title</th>
                                     <th scope="col" class="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Content</th>
                                     <th scope="col" class="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Date & Time</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-slate-100">
@@ -111,6 +112,17 @@
                                     <td class="px-4 py-3 whitespace-nowrap text-xs text-slate-400 font-medium">
                                         <div>{{ $d->date }}</div>
                                         <div class="text-[10px] mt-0.5">{{ $d->time }}</div>
+                                    </td>
+                                    <td>
+                                        <form action="/delete-push" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this Notification ?')">
+                                        @csrf
+                                        <input type="hidden" value="{{ $d->id }}" name="id">
+                                        <input type="hidden" value="{{ $d->user_email }}" name="user_email">
+                                        <input type="hidden" value="{{ $d->school_email }}" name="school_email">
+                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-md text-xs font-medium transition shadow-sm">
+                                            Delete
+                                        </button>
+                                    </form>
                                     </td>
                                 </tr>
                                 @endforeach
