@@ -109,7 +109,6 @@
                             </div>
                             <script>
                                 function registerOneSignalUser() {
-                                    // Agar Median app container aur onesignal plugin active ho chuke hain:
                                     if (typeof median !== 'undefined' && median.onesignal) {
 
                                         var userEmail = "{{ $data->email ?? '' }}";
@@ -117,17 +116,14 @@
                                         if (userEmail) {
                                             var cleanEmail = userEmail.toLowerCase().trim();
 
-                                            // OneSignal mapping command
                                             median.onesignal.setExternalUserId(cleanEmail);
                                             console.log("OneSignal Mapping Successful: " + cleanEmail);
                                         }
                                     } else {
-                                        // Agar bridge abhi load nahi hua, toh 300 milliseconds baad dobara koshish karein
                                         setTimeout(registerOneSignalUser, 300);
                                     }
                                 }
 
-                                // Page load hote hi function run karein
                                 document.addEventListener("DOMContentLoaded", registerOneSignalUser);
                             </script>
 
@@ -363,19 +359,6 @@
     document.addEventListener("DOMContentLoaded", registerOneSignalUser);
 </script>
 
-<a href="/logout" onclick="logoutOneSignal(event)" class="text-red-500 hover:text-red-600 font-bold">
-    Logout
-</a>
-
-(Note: Agar aapka button <button> tag me hai, toh is tarah likhein):
-
-<button onclick="logoutOneSignal(event)" class="bg-red-600 text-white px-4 py-2 rounded">
-    Logout
-</button>
-
-Step 2: Dashboard me niche yeh JavaScript Code add kar dein
-
-Apne dashboards ke JS block me is logoutOneSignal function ko shamil kar dein:
 
 <script>
     function logoutOneSignal(event) {
