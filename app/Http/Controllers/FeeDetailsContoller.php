@@ -191,7 +191,14 @@ class FeeDetailsContoller extends Controller
                 $msg = " Fee Deposit Success";
                 $studentEmail = $request->email;
                 $amount = $request->deposit_fee;
-
+                Notification::create([
+                    'title' => "Fee Deposited! 💳",
+                    'content' => "Dear " . $student_name . ", Rs. " . $amount . " has been successfully credited.",
+                    'school_email' => $school_email,
+                    'user_email' => $studentEmail,
+                    'time' => $time,
+                    'date' => $date
+                ]);
                 $this->sendPush(
                     $studentEmail,
                     "Fee Deposited! 💳",
@@ -211,8 +218,6 @@ class FeeDetailsContoller extends Controller
                     'time' => $time,
                     'school_email' => $school_email
                 ]);
-                $date = Carbon::now()->toDateString();
-                $time =  Carbon::now()->toTimeString();
                 $msg = " Fee Deposit Success";
                 $studentEmail = $request->email;
                 $amount = $request->deposit_fee;
@@ -220,7 +225,7 @@ class FeeDetailsContoller extends Controller
                     'title' => "Fee Deposited! 💳",
                     'content' => "Dear " . $student_name . ", Rs. " . $amount . " has been successfully credited.",
                     'school_email' => $school_email,
-                    'user_email' => $email,
+                    'user_email' => $studentEmail,
                     'time' => $time,
                     'date' => $date
                 ]);
