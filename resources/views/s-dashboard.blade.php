@@ -51,6 +51,9 @@
                     <button onclick="window.location.href='/s-fee-details'" class="w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 text-left transition duration-150">
                         💳 My Fee Details
                     </button>
+                     <button onclick="window.location.href='/notification?sq={{ $data->email }}&shq={{ Crypt::encryptString($school_email) }}'" class="w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 text-left transition duration-150">
+                        Notifacation
+                    </button>
                 </div>
             </div>
 

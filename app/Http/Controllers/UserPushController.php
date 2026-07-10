@@ -64,8 +64,8 @@ class UserPushController extends Controller
                 'content' => $body,
                 'school_email' => $decryptedSchoolEmail,
                 'user_email' => $email,
-                'time'=>$time,
-                'date'=>$date
+                'time' => $time,
+                'date' => $date
             ];
         }
         Notification::insert($notifications);
@@ -77,8 +77,8 @@ class UserPushController extends Controller
     {
         $school_email = $request->shq;
         $st_email = $request->sq;
-        $data = DB::table('notification')->where('school_email',Crypt::decryptString($school_email))->where('user_email',$st_email)->get();
-        return view('s-push', compact('school_email', 'st_email','data'));
+        $data = DB::table('notification')->where('school_email', Crypt::decryptString($school_email))->where('user_email', $st_email)->get();
+        return view('s-push', compact('school_email', 'st_email', 'data'));
     }
 
 
@@ -91,32 +91,33 @@ class UserPushController extends Controller
         $date = $request->input('date');
         $time = $request->input('time');
         $decryptedSchoolEmail = Crypt::decryptString($school_email);
-        $student_name = DB::table('student')->where('school_email',$decryptedSchoolEmail)->where('email',$st_email)->first()->name;
-        $body = "Dear ".$student_name." ❤ ,".$body;
+        $student_name = DB::table('student')->where('school_email', $decryptedSchoolEmail)->where('email', $st_email)->first()->name;
+        $body = "Dear " . $student_name . " ❤ ," . $body;
         $this->student_push($st_email, $title, $body);
         Notification::create([
             'title' => $title,
             'content' => $body,
             'school_email' => $decryptedSchoolEmail,
             'user_email' => $st_email,
-            'time'=>$time,
-            'date'=>$date
+            'time' => $time,
+            'date' => $date
         ]);
         $msg = ["msg" => "success"];
         return response()->json($msg);
     }
 
-    public function hh(){
+    public function hh()
+    {
         DB::table('notification')->delete();
     }
-    
+
     public function student_push($st_email, $title, $body)
     {
         $appId = env('ONESIGNAL_APP_ID');
         $restKey = env('ONESIGNAL_REST_API_KEY');
-        
 
-         $response = Http::withHeaders([
+
+        $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $restKey,
             'Content-Type' => 'application/json',
         ])->post('https://onesignal.com/api/v1/notifications', [
@@ -128,5 +129,13 @@ class UserPushController extends Controller
         ]);
 
         return $response->json();
+    }
+
+    public function notification(Request $request)
+    {
+        $school_email = Crypt::decryptString($request->shq);
+        $st_email = $request->sq;
+        $data = DB::table('notification')->where('school_email', $school_email)->where('user_email', $st_email)->get();
+        return view('notification',compact('data'));
     }
 }
