@@ -12,7 +12,8 @@ class Notification extends Model
         'school_email',
         'user_email',
         'time',
-        'date'
+        'date',
+        'checks'
     ];
    
 }

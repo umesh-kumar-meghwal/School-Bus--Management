@@ -65,7 +65,8 @@ class UserPushController extends Controller
                 'school_email' => $decryptedSchoolEmail,
                 'user_email' => $email,
                 'time' => $time,
-                'date' => $date
+                'date' => $date,
+                'checks'=>0
             ];
         }
         Notification::insert($notifications);
@@ -100,7 +101,8 @@ class UserPushController extends Controller
             'school_email' => $decryptedSchoolEmail,
             'user_email' => $st_email,
             'time' => $time,
-            'date' => $date
+            'date' => $date,
+            'checks'=>0
         ]);
         $msg = ["msg" => "success"];
         return response()->json($msg);
