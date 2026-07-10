@@ -66,7 +66,7 @@ class UserPushController extends Controller
                 'user_email' => $email,
                 'time' => $time,
                 'date' => $date,
-                'checks'=>0
+                'checks' => 0
             ];
         }
         Notification::insert($notifications);
@@ -102,7 +102,7 @@ class UserPushController extends Controller
             'user_email' => $st_email,
             'time' => $time,
             'date' => $date,
-            'checks'=>0
+            'checks' => 0
         ]);
         $msg = ["msg" => "success"];
         return response()->json($msg);
@@ -138,14 +138,26 @@ class UserPushController extends Controller
         $school_email = Crypt::decryptString($request->shq);
         $st_email = $request->sq;
         $data = DB::table('notification')->where('school_email', $school_email)->where('user_email', $st_email)->get();
-        return view('notification',compact('data'));
+        return view('notification', compact('data'));
     }
-    public function noti_count(Request $request){
+    public function noti_count(Request $request)
+    {
         $school_email = $request->input('school_email');
         $st_email = $request->input('st_email');
-        $data = DB::table('notification')->where('school_email', $school_email)->where('user_email', $st_email)->get();
-        $d_count = ["noti_count"=>count($data)];
+        $data = DB::table('notification')->where('school_email', $school_email)->where('user_email', $st_email)->pluck('checks')->toArray();
+        $zero_count = 0;
+        $one_count = 0;
+        foreach ($data as $d) {
+            if ($d == 0) {
+                $zero_count += 1;
+            } else {
+                $one_count += 1;
+            }
+        }
+        if ($zero_count == 0) {
+            $zero_count = " ";
+        }
+        $d_count = ["noti_count" => $zero_count];
         return response()->json($d_count);
     }
-    
 }
