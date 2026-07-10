@@ -94,8 +94,13 @@ class UserPushController extends Controller
         $decryptedSchoolEmail = Crypt::decryptString($school_email);
         $student_name = DB::table('student')->where('school_email', $decryptedSchoolEmail)->where('email', $st_email)->first()->name;
         $body = "Dear " . $student_name . " ❤ ," . $body;
-        $url = "https://school-bus-tracking-management.up.railway.app/notification?sq=" . $st_email . "&shq=" . $school_email;
-        $this->student_push($st_email, $title, $body,$url);
+
+        $rawUrl = url("https://school-bus-tracking-management.up.railway.app/notification?sq=" . $st_email . "&shq=" . $school_email);
+        $url = str_replace('http://', 'https://', $rawUrl);
+         dd($url);
+
+
+        $this->student_push($st_email, $title, $body, $url);
         Notification::create([
             'title' => $title,
             'content' => $body,
@@ -114,7 +119,7 @@ class UserPushController extends Controller
         DB::table('notification')->delete();
     }
 
-    public function student_push($st_email, $title, $body,$url)
+    public function student_push($st_email, $title, $body, $url)
     {
         $appId = env('ONESIGNAL_APP_ID');
         $restKey = env('ONESIGNAL_REST_API_KEY');
