@@ -268,11 +268,9 @@
             if (data.notification) {
                 title = data.notification.title;
                 body = data.notification.body;
-                datas = data.notification.q;
             } else {
                 title = data.title;
                 body = data.body;
-                datas = data.q;
             }
         }
         document.getElementById('h').innerHTML=title;
