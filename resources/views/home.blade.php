@@ -126,11 +126,7 @@
                 console.log("App detected: Download button hidden.");
             }
         }
-    });
-</script>
-<script>
-    addEventListener('DOMContentLoaded', function() {
-        $.ajax({
+           $.ajax({
             url: "/ip-fetch",
             type: "GET",
             dataType: "json",
@@ -143,5 +139,6 @@
         })
     });
 </script>
+
 
 </html>
