@@ -24,9 +24,9 @@
 
             <!-- Header Actions -->
             <div class="flex items-center gap-3">
-               
-                
-                
+
+
+
                 <a href="/login" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm hover:shadow transition">
                     Login to Portal
                 </a>
@@ -48,9 +48,20 @@
 
 
             <div class="mt-8 flex items-center justify-center gap-4">
-               
+
                 <a href="/login" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all duration-150 transform hover:-translate-y-0.5">
                     Get Started Now
+                </a>
+                <!-- Beautiful Tailwind APK Download Button -->
+                <a
+                    href="{{ asset('downloads/transitflow.apk') }}"
+                    download
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/35 transition duration-150 transform hover:-translate-y-0.5">
+                    <!-- Download Icon -->
+                    <svg class="h-5 w-5 text-white animate-bounce" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>
+                    Download Mobile App (APK)
                 </a>
 
             </div>
