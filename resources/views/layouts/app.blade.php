@@ -63,22 +63,34 @@
     document.addEventListener("DOMContentLoaded", registerMedianNotificationHandler);
 </script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // 1. Check karein ke kya user mobile app ke andar dakhil hai ya normal browser par
+    function checkAppAndHideButton() {
+        // 1. App aur standard browser User-Agents ko check karein
         var isInsideApp = navigator.userAgent.indexOf('GoNative') > -1 || 
                           navigator.userAgent.indexOf('Median') > -1 || 
                           (typeof median !== 'undefined');
 
-        // 2. Agar user App ke andar hai:
         if (isInsideApp) {
+            // Agar app detected ho jaye, toh button ko instantly hide kar dein
             var downloadSection = document.getElementById('download-app-section');
             if (downloadSection) {
-                // Tailwind ki "hidden" class se button ko hide (chupa) kar dein
                 downloadSection.classList.add('hidden');
-                console.log("App detected: Download button hidden.");
+                console.log("App detected successfully. Download button is hidden.");
+            }
+        } else {
+            // Agar bridge abhi load nahi hua, toh har 200ms par 5 martaba check karein (Timing mismatch dur karne ke liye)
+            if (!window.checkAppRetryCount) {
+                window.checkAppRetryCount = 0;
+            }
+            
+            if (window.checkAppRetryCount < 6) {
+                window.checkAppRetryCount++;
+                setTimeout(checkAppAndHideButton, 200);
             }
         }
-    });
+    }
+
+    // Page load hote hi checking start karein
+    document.addEventListener("DOMContentLoaded", checkAppAndHideButton);
 </script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
