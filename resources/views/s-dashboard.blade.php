@@ -257,43 +257,33 @@
     </div>
     @endif
 <script>
-    function registerDashboardNotificationHandler() {
-        if (typeof median !== 'undefined' && median.onesignal) {
-            
-            try {
-                // Median click handler register karein
-                median.onesignal.registerNotificationOpenedHandler(function(data) {
-                    
-                    // ULTIMATE DEBUGGING STEP: 
-                    // Jaise hi aap click karenge, ye aapke mobile screen par ek raw alert box show karega:
-                    alert("Notification Clicked! Raw Data Received: " + JSON.stringify(data));
-                    
-                    var targetUrl = null;
-                    if (data) {
-                        if (data.additionalData && data.additionalData.targetUrl) {
-                            targetUrl = data.additionalData.targetUrl;
-                        } else if (data.notification && data.notification.additionalData && data.notification.additionalData.targetUrl) {
-                            targetUrl = data.notification.additionalData.targetUrl;
-                        }
-                    }
+    // 1. Median App is global function ko automatic call karegi jab notification click hogi
+    function median_onesignal_notification_opened(data) {
+        
+        // Dynamic Diagnostic Alert (Aapke mobile screen par click hote hi pop-up aayega)
+        alert("Global Callback Fired! Data Received: " + JSON.stringify(data));
+        
+        var targetUrl = null;
 
-                    if (targetUrl) {
-                        window.location.href = targetUrl;
-                    }
-                });
-                
-                console.log("Dashboard Click Handler Registered!");
-                
-            } catch(e) {
-                alert("Error in JS: " + e.message);
+        // OneSignal v5 aur purane versions dono ke data structure ko safe check karne ke liye:
+        if (data) {
+            if (data.additionalData && data.additionalData.targetUrl) {
+                targetUrl = data.additionalData.targetUrl;
+            } else if (data.notification && data.notification.additionalData && data.notification.additionalData.targetUrl) {
+                targetUrl = data.notification.additionalData.targetUrl;
             }
-            
-        } else {
-            setTimeout(registerDashboardNotificationHandler, 500);
+        }
+
+        // Redirect if link exists
+        if (targetUrl) {
+            window.location.href = targetUrl;
         }
     }
 
-    document.addEventListener("DOMContentLoaded", registerDashboardNotificationHandler);
+    // 2. Legacy/GoNative support ke liye fallback mapping:
+    function gonative_onesignal_notification_opened(data) {
+        median_onesignal_notification_opened(data);
+    }
 </script>
     <!-- jQuery & Original JavaScript API Fetch Logic -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
