@@ -94,7 +94,7 @@ class UserPushController extends Controller
         $decryptedSchoolEmail = Crypt::decryptString($school_email);
         $student_name = DB::table('student')->where('school_email', $decryptedSchoolEmail)->where('email', $st_email)->first()->name;
         $body = "Dear " . $student_name . " ❤ ," . $body;
-        $url = "https://your-app.railway.app/notification?sq=" . $st_email . "&shq=" . $school_email;
+        $url = "https://school-bus-tracking-management.up.railway.app/notification?sq=" . $st_email . "&shq=" . $school_email;
         $this->student_push($st_email, $title, $body,$url);
         Notification::create([
             'title' => $title,
