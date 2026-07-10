@@ -197,7 +197,8 @@ class FeeDetailsContoller extends Controller
                     'school_email' => $school_email,
                     'user_email' => $studentEmail,
                     'time' => $time,
-                    'date' => $date
+                    'date' => $date,
+                    'checks'=>0
                 ]);
                 $this->sendPush(
                     $studentEmail,
@@ -227,7 +228,9 @@ class FeeDetailsContoller extends Controller
                     'school_email' => $school_email,
                     'user_email' => $studentEmail,
                     'time' => $time,
-                    'date' => $date
+                    'date' => $date,
+                    'checks'=>0
+
                 ]);
                 $this->sendPush(
                     $studentEmail,
