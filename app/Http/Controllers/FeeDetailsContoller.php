@@ -6,8 +6,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-
+use Carbon\Carbon;
 use App\Models\Fee;
+use App\Models\Notification;
 use App\Models\Student_Fee;
 use Illuminate\Support\Facades\Crypt;
 
@@ -210,9 +211,19 @@ class FeeDetailsContoller extends Controller
                     'time' => $time,
                     'school_email' => $school_email
                 ]);
+                $date = Carbon::now()->toDateString();
+                $time =  Carbon::now()->toTimeString();
                 $msg = " Fee Deposit Success";
                 $studentEmail = $request->email;
                 $amount = $request->deposit_fee;
+                Notification::create([
+                    'title' => "Fee Deposited! 💳",
+                    'content' => "Dear " . $student_name . ", Rs. " . $amount . " has been successfully credited.",
+                    'school_email' => $school_email,
+                    'user_email' => $email,
+                    'time' => $time,
+                    'date' => $date
+                ]);
                 $this->sendPush(
                     $studentEmail,
                     "Fee Deposited! 💳",

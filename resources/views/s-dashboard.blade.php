@@ -8,8 +8,8 @@
     <title>Student Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-   
-         
+
+
 </head>
 
 <body class="bg-slate-100 font-sans antialiased min-h-screen">
@@ -54,23 +54,38 @@
                     <button onclick="window.location.href='/s-fee-details'" class="w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 text-left transition duration-150">
                         💳 My Fee Details
                     </button>
-                    <button onclick="window.location.href='/notification?sq={{ $data->email }}&shq={{ Crypt::encryptString($school_email) }}'" class="w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 text-left transition duration-150">
-                        Notifacation <span id="noti-count"></span>
+                    <!-- Premium Notification Center Button (Sidebar ya Dashboard ke liye) -->
+                    <button
+                        onclick="window.location.href='/notification?sq={{ $data->email }}&shq={{ Crypt::encryptString($school_email) }}'"
+                        class="flex items-center justify-between w-full px-4 py-3 bg-slate-800 hover:bg-slate-750 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700/50 transition duration-150 shadow-sm">
+                        <!-- Left Side: Bell Icon & Label -->
+                        <span class="flex items-center gap-2.5">
+                            <span class="text-sm">🔔</span>
+                            <span>Notifications</span>
+                        </span>
+
+                        <!-- Right Side: Dynamic Count Badge (Targeted by ID: noti-count) -->
+                        <!-- empty:hidden class count na hone par red bubble ko automatic chupayegi -->
+                        <span
+                            id="noti-count"
+                            class="empty:hidden inline-flex items-center justify-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-600 text-white shadow-sm shadow-rose-600/30 transition duration-150">
+                            <!-- Dynamic number loads here, e.g. 3 -->
+                        </span>
                     </button>
                 </div>
             </div>
             <script>
                 setInterval(() => {
                     $.ajax({
-                        url:"/noti-count",
-                        type:"GET",
-                        data:{
-                            _token:"{{ csrf_token() }}",
-                            st_email : "{{ $data->email }}",
-                            school_email : "{{ $school_email }}"
+                        url: "/noti-count",
+                        type: "GET",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            st_email: "{{ $data->email }}",
+                            school_email: "{{ $school_email }}"
                         },
-                        success:function(data){
-                            document.getElementById('noti-count').innerHTML=data.noti_count;
+                        success: function(data) {
+                            document.getElementById('noti-count').innerHTML = data.noti_count;
                         }
                     })
                 }, 2000);
@@ -257,29 +272,29 @@
 
     </div>
     @endif
-<script>
-    // Directly bind the handler to the browser's global window object
-    window.median_onesignal_notification_opened = function(data) {
-        
-        var title = "";
-        var body = "";
-        var q="";
-        if (data) {
-            if (data.notification) {
-                title = data.notification.title;
-                body = data.notification.body;
-            } else {
-                title = data.title;
-                body = data.body;
+    <script>
+        // Directly bind the handler to the browser's global window object
+        window.median_onesignal_notification_opened = function(data) {
+
+            var title = "";
+            var body = "";
+            var q = "";
+            if (data) {
+                if (data.notification) {
+                    title = data.notification.title;
+                    body = data.notification.body;
+                } else {
+                    title = data.title;
+                    body = data.body;
+                }
             }
-        }
-        document.getElementById('h').innerHTML=title;
+            document.getElementById('h').innerHTML = title;
 
-        
-    };
 
-    window.gonative_onesignal_notification_opened = window.median_onesignal_notification_opened;
-</script>
+        };
+
+        window.gonative_onesignal_notification_opened = window.median_onesignal_notification_opened;
+    </script>
     <!-- jQuery & Original JavaScript API Fetch Logic -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
