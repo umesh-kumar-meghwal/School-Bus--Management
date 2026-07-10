@@ -333,7 +333,6 @@
             var cleanEmail = userEmail.toLowerCase().trim();
             
             try {
-                // OneSignal SDK v5+ me "setExternalUserId" ke bajaye "login" use hota hai:
                 if (typeof median.onesignal.login === 'function') {
                     median.onesignal.login(cleanEmail);
                     statusEl.textContent = "OneSignal: login() executed with " + cleanEmail;
@@ -361,33 +360,6 @@
     document.addEventListener("DOMContentLoaded", registerOneSignalUser);
 </script>
 
-Aapne ek behad zaroori aur realistic security issue (problem) pakda hai! Yeh aam
-taur par shared devices (mislan ek hi mobile par jab baari-baari behan aur bhai
-login karte hain) par zaroor pesh aata hai.
-
-Yeh Kyun Hota Hai?
-
-OneSignal (v5) me jab ek user login karta hai, toh OneSignal us device ko us
-user ke sath bind (jod) deta hai. Lekin jab woh logout karta hai, toh app level
-par toh logout ho jata hai, par OneSignal server ko nahi pata chalta ke purana
-user ja chuka hai. Is wajah se jab dusra user login karta hai, toh OneSignal
-purane aur naye dono users ko ek hi device par notifications bhejne lagta hai.
-
-Iska Hal: OneSignal logout() Method
-
-Isko theek karne ke liye, jaise hi user aapke system me "Logout" par click
-karega, hume pehle mobile app ke andar se median.onesignal.logout() call karna
-hoga (taake OneSignal server se us user ki email unlink ho jaye), aur uske baad
-Laravel ka logout route open hoga.
-
-Niche iska asaan aur mukammal tarika bataya gaya hai:
-
-Step 1: Apne Dashboards par Logout Button ko is Tarah Update Karein
-
-Apne Student, Admin, aur Driver dashboards par jahan bhi Logout ka button ya
-link hai, use is tarah update karein:
-
-<!-- Logout Link with custom onclick click listener -->
 <a href="/logout" onclick="logoutOneSignal(event)" class="text-red-500 hover:text-red-600 font-bold">
     Logout
 </a>
