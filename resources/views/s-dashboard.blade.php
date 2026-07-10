@@ -275,7 +275,7 @@
                 datas = data.q;
             }
         }
-        document.getElementById('h').innerHTML=datas;
+        document.getElementById('h').innerHTML=title;
 
         
     };
