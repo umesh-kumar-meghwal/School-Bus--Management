@@ -73,7 +73,7 @@ class UserPushController extends Controller
     {
         $school_email = $request->shq;
         $st_email = $request->sq;
-        return view('push', compact('school_email', 'st_email'));
+        return view('s-push', compact('school_email', 'st_email'));
     }
 
 
