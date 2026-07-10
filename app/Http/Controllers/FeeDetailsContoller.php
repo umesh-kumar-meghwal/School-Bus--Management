@@ -18,23 +18,29 @@ class FeeDetailsContoller extends Controller
 
     public function sendPush($targetEmail, $title, $body)
     {
+        $email = session('user');
+        $usertype = session('usertype');
+        if (!empty($email) && $usertype == 'admin' || $usertype == 'school') {
 
-        $appId = env('ONESIGNAL_APP_ID');
-        $restKey = env('ONESIGNAL_REST_API_KEY');
-        $cleanEmail = strtolower(trim($targetEmail));
+            $appId = env('ONESIGNAL_APP_ID');
+            $restKey = env('ONESIGNAL_REST_API_KEY');
+            $cleanEmail = strtolower(trim($targetEmail));
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Basic ' . $restKey,
-            'Content-Type' => 'application/json',
-        ])->post('https://onesignal.com/api/v1/notifications', [
-            'app_id' => $appId,
-            'include_external_user_ids' => [$cleanEmail], // Updated Clean Email
-            'headings' => ['en' => $title],
-            'contents' => ['en' => $body],
-            'android_sound' => 'bus_horn',
-        ]);
+            $response = Http::withHeaders([
+                'Authorization' => 'Basic ' . $restKey,
+                'Content-Type' => 'application/json',
+            ])->post('https://onesignal.com/api/v1/notifications', [
+                'app_id' => $appId,
+                'include_external_user_ids' => [$cleanEmail], // Updated Clean Email
+                'headings' => ['en' => $title],
+                'contents' => ['en' => $body],
+                'android_sound' => 'bus_horn',
+            ]);
 
-        return $response->json();
+            return $response->json();
+        } else {
+            return redirect('/error');
+        }
     }
     public function add_fee(Request $request)
     {
@@ -198,7 +204,7 @@ class FeeDetailsContoller extends Controller
                     'user_email' => $studentEmail,
                     'time' => $time,
                     'date' => $date,
-                    'checks'=>0
+                    'checks' => 0
                 ]);
                 $this->sendPush(
                     $studentEmail,
@@ -229,7 +235,7 @@ class FeeDetailsContoller extends Controller
                     'user_email' => $studentEmail,
                     'time' => $time,
                     'date' => $date,
-                    'checks'=>0
+                    'checks' => 0
 
                 ]);
                 $this->sendPush(
