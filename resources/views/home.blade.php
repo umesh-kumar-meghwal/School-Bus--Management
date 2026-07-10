@@ -52,7 +52,7 @@
                 <a href="/login" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all duration-150 transform hover:-translate-y-0.5">
                     Get Started Now
                 </a>
-                 <div id="download-app-section" class="my-4">
+                 <div class="hide-in-app my-4">
                 <a
                     href="https://school-bus-tracking-management.up.railway.app/downloads/transitflow.apk"
                     download
