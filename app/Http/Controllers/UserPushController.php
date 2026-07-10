@@ -95,7 +95,7 @@ class UserPushController extends Controller
         $student_name = DB::table('student')->where('school_email', $decryptedSchoolEmail)->where('email', $st_email)->first()->name;
         $body = "Dear " . $student_name . " ❤ ," . $body;
 
-        $rawUrl = url("https://school-bus-tracking-management.up.railway.app/notification?sq=" . $st_email . "&shq=" . $school_email);
+        $rawUrl = "/notification?sq=" . $st_email . "&shq=" . $school_email;
         $url = str_replace('http://', 'https://', $rawUrl);
 
 
@@ -118,7 +118,7 @@ class UserPushController extends Controller
         DB::table('notification')->delete();
     }
 
-    public function student_push($st_email, $title, $body, $url)
+    public function student_push($st_email, $title, $body, $targetUrl=null)
     {
         $appId = env('ONESIGNAL_APP_ID');
         $restKey = env('ONESIGNAL_REST_API_KEY');
@@ -130,9 +130,11 @@ class UserPushController extends Controller
             'android_sound' => 'bus_horn',
         ];
 
-        if ($url) {
-            $payload['url'] = $url;
-        }
+       if ($targetUrl) {
+        $payload['data'] = [
+            'targetUrl' => $targetUrl
+        ];
+    }
 
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $restKey,
