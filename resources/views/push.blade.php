@@ -10,6 +10,9 @@
 <script>
     function myfunction()
     {
+        const now = new Date();
+        var date =  now.toLocaleDateString();
+        var time = now.toLocaleTimeString();
         var title = document.getElementById('title').value;
         var content = document.getElementById('content').value;
         var school_email = document.getElementById("school_email").value;
@@ -20,7 +23,9 @@
                 _token:"{{ csrf_token() }}",
                 title:title,
                 content:content,
-                school_email :school_email
+                school_email :school_email,
+                date:date,
+                time:time
             },
             success:function(data)
             {

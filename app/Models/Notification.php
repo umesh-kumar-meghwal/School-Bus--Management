@@ -10,7 +10,9 @@ class Notification extends Model
         'title',
         'content',
         'school_email',
-        'user_email'
+        'user_email',
+        'time',
+        'date'
     ];
    
 }

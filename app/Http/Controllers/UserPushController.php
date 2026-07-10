@@ -49,6 +49,8 @@ class UserPushController extends Controller
         $school_email = $request->input('school_email');
         $title = $request->input('title');
         $body = $request->input('content');
+        $time = $request->input('time');
+        $date = $request->input('date');
         $emails = DB::table('student')
             ->where('school_email', Crypt::decryptString($school_email))
             ->pluck('email')
@@ -62,6 +64,8 @@ class UserPushController extends Controller
                 'content' => $body,
                 'school_email' => $decryptedSchoolEmail,
                 'user_email' => $email,
+                'time'=>$time,
+                'date'=>$date
             ];
         }
         Notification::insert($notifications);
@@ -73,7 +77,8 @@ class UserPushController extends Controller
     {
         $school_email = $request->shq;
         $st_email = $request->sq;
-        return view('s-push', compact('school_email', 'st_email'));
+        $data = DB::table('notification')->where('school_email',Crypt::decryptString($school_email))->where('user_email',$st_email)->get();
+        return view('s-push', compact('school_email', 'st_email','data'));
     }
 
 
@@ -83,6 +88,8 @@ class UserPushController extends Controller
         $title = $request->input('title');
         $body = $request->input('content');
         $st_email = $request->input('st_email');
+        $date = $request->input('date');
+        $time = $request->input('time');
         $decryptedSchoolEmail = Crypt::decryptString($school_email);
         $student_name = DB::table('student')->where('school_email',$decryptedSchoolEmail)->where('email',$st_email)->first()->name;
         $body = "Dear ".$student_name." ❤ ,".$body;
@@ -91,7 +98,9 @@ class UserPushController extends Controller
             'title' => $title,
             'content' => $body,
             'school_email' => $decryptedSchoolEmail,
-            'user_email' => $st_email
+            'user_email' => $st_email,
+            'time'=>$time,
+            'date'=>$date
         ]);
         $msg = ["msg" => "success"];
         return response()->json($msg);
