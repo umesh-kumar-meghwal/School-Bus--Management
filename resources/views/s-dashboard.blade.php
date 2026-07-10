@@ -92,6 +92,7 @@
                 <!-- Col 1: Personal Details Card (Span 5) -->
                 <div class="xl:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col justify-between">
                     <div>
+                        <p id="h"></p>
                         <h2 class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-3 mb-5">📋 Student Details</h2>
 
                         <div class="space-y-4">
@@ -257,33 +258,29 @@
     </div>
     @endif
 <script>
-    // 1. Median App is global function ko automatic call karegi jab notification click hogi
-    function median_onesignal_notification_opened(data) {
+    // Directly bind the handler to the browser's global window object
+    window.median_onesignal_notification_opened = function(data) {
         
-        // Dynamic Diagnostic Alert (Aapke mobile screen par click hote hi pop-up aayega)
-        alert("Global Callback Fired! Data Received: " + JSON.stringify(data));
-        
-        var targetUrl = null;
-
-        // OneSignal v5 aur purane versions dono ke data structure ko safe check karne ke liye:
+        var title = "";
+        var body = "";
+        var q="";
         if (data) {
-            if (data.additionalData && data.additionalData.targetUrl) {
-                targetUrl = data.additionalData.targetUrl;
-            } else if (data.notification && data.notification.additionalData && data.notification.additionalData.targetUrl) {
-                targetUrl = data.notification.additionalData.targetUrl;
+            if (data.notification) {
+                title = data.notification.title;
+                body = data.notification.body;
+                datas = data.notification.q;
+            } else {
+                title = data.title;
+                body = data.body;
+                datas = data.q;
             }
         }
+        document.getElementById('h').innerHTML=datas;
 
-        // Redirect if link exists
-        if (targetUrl) {
-            window.location.href = targetUrl;
-        }
-    }
+        
+    };
 
-    // 2. Legacy/GoNative support ke liye fallback mapping:
-    function gonative_onesignal_notification_opened(data) {
-        median_onesignal_notification_opened(data);
-    }
+    window.gonative_onesignal_notification_opened = window.median_onesignal_notification_opened;
 </script>
     <!-- jQuery & Original JavaScript API Fetch Logic -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
