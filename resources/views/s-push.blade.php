@@ -1,4 +1,4 @@
-@if($data)
+@if($data && count($data)>0)
 <table>
     <tr>
         <th>Title</th>
