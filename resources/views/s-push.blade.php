@@ -2,8 +2,8 @@
 <h1> Student Push Notifications</h1>
 <p>Enter the Title : <input type="text" name="title" id="title"></p>
 <p>Enter the Content <textarea type="text" name="content" id="content"></textarea></p>
-<input type="hidden" name="school_email" value="{{ $school_email }}" id="school_email">
-<input type="hidden" name="st_email" value="{{ $st_email }}" id="st_email">
+<input type="hidden" name="school_email" value="{{ $school_email }}" id="school_email"/>
+<input type="hidden" name="st_email" value="{{ $st_email }}" id="st_email"/>
 <button onclick="myfunction()">Push</button>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
