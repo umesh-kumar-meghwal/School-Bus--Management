@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="crsf-token" content="{{ csrf_token() }}">
     <title>Student Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -51,11 +52,27 @@
                     <button onclick="window.location.href='/s-fee-details'" class="w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 text-left transition duration-150">
                         💳 My Fee Details
                     </button>
-                     <button onclick="window.location.href='/notification?sq={{ $data->email }}&shq={{ Crypt::encryptString($school_email) }}'" class="w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 text-left transition duration-150">
-                        Notifacation
+                    <button onclick="window.location.href='/notification?sq={{ $data->email }}&shq={{ Crypt::encryptString($school_email) }}'" class="w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 text-left transition duration-150">
+                        Notifacation <span id="noti-count"></span>
                     </button>
                 </div>
             </div>
+            <script>
+                setInterval(() => {
+                    $.ajax({
+                        url:"/noti-count",
+                        type:"GET",
+                        data:{
+                            _token:"{{ csrf_token() }}",
+                            st_email : "{{ $data->email }}",
+                            school_email : "{{ $school_email }}"
+                        },
+                        success:function(data){
+                            document.getElementById('noti-count').innerHTML=data.noti_count;
+                        }
+                    })
+                }, 2000);
+            </script>
 
             <!-- Logout Link -->
             <div class="pt-6 border-t border-slate-800">
@@ -314,9 +331,9 @@
         var bridgeEl = document.getElementById('debug-bridge');
         var emailEl = document.getElementById('debug-email');
         var statusEl = document.getElementById('debug-status');
-        
-        var userEmail = "{{ $data->email ?? '' }}"; 
-        
+
+        var userEmail = "{{ $data->email ?? '' }}";
+
         if (userEmail) {
             emailEl.textContent = "Email found in Laravel: " + userEmail;
             emailEl.className = "text-emerald-400";
@@ -328,9 +345,9 @@
         if (typeof median !== 'undefined' && median.onesignal) {
             bridgeEl.textContent = "Median Mobile Bridge: ACTIVE (Detected)";
             bridgeEl.className = "text-emerald-400";
-            
+
             var cleanEmail = userEmail.toLowerCase().trim();
-            
+
             try {
                 if (typeof median.onesignal.login === 'function') {
                     median.onesignal.login(cleanEmail);
@@ -344,14 +361,14 @@
                     statusEl.textContent = "Error: No matching OneSignal login function found!";
                     statusEl.className = "text-rose-400";
                 }
-            } catch(e) {
+            } catch (e) {
                 statusEl.textContent = "OneSignal Error: " + e.message;
                 statusEl.className = "text-rose-400";
             }
         } else {
             bridgeEl.textContent = "Median Mobile Bridge: NOT FOUND (Retrying...)";
             bridgeEl.className = "text-amber-400";
-            
+
             setTimeout(registerOneSignalUser, 500);
         }
     }
@@ -363,9 +380,9 @@
 <script>
     function logoutOneSignal(event) {
         if (typeof median !== 'undefined' && median.onesignal) {
-            
-            event.preventDefault(); 
-            
+
+            event.preventDefault();
+
             try {
                 if (typeof median.onesignal.logout === 'function') {
                     median.onesignal.logout();
@@ -376,12 +393,11 @@
             }
 
             setTimeout(function() {
-                window.location.href = "/logout"; 
+                window.location.href = "/logout";
             }, 200);
-            
+
         } else {
             window.location.href = "/logout";
         }
     }
 </script>
-

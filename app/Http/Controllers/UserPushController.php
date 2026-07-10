@@ -138,4 +138,12 @@ class UserPushController extends Controller
         $data = DB::table('notification')->where('school_email', $school_email)->where('user_email', $st_email)->get();
         return view('notification',compact('data'));
     }
+    public function noti_count(Request $request){
+        $school_email = Crypt::decryptString($request->input('school_email'));
+        $st_email = $request->input('st_email');
+        $data = DB::table('notification')->where('school_email', $school_email)->where('user_email', $st_email)->get();
+        $d_count = ["noti_count"=>count($data)];
+        return response()->json($d_count);
+    }
+    
 }

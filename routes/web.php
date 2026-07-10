@@ -50,6 +50,7 @@ Route::get('/s-push',[UserPushController::class,'s_push']);
 Route::get('/s-pushed',[UserPushController::class,'s_pushed']);
 Route::get('/hh',[UserPushController::class,'hh']);
 Route::get('/notification',[UserPushController::class,'notification']);
+Route::get('/noti-count',[UserPushController::class,'noti_count']);
 
 
 
