@@ -25,8 +25,8 @@
             <!-- Register Button at Top (Only if data exists) -->
             @if ($data && count($data)>0)
             <div>
-                
-                    <a href="/student?q={{ $school_email }}"  class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow transition">+ Student Register</a>
+
+                <a href="/student?q={{ $school_email }}" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow transition">+ Student Register</a>
 
             </div>
             @endif
@@ -84,6 +84,11 @@
                                         </button>
                                     </form>
 
+                                    <a href="/s-push?sq={{ $d->email }}&shq={{ $school_email }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-medium transition shadow-sm">
+                                        Details
+                                    </a>
+
+
                                     <!-- Delete Action -->
                                     <form action="/studentdelete" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this student?')">
                                         @csrf
@@ -113,7 +118,7 @@
                 </svg>
             </div>
             <h3 class="text-base font-semibold text-slate-800">No Student Records</h3>
-                                <a href="/student?q={{ $school_email }}"  class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow transition">+ Student Register</a>
+            <a href="/student?q={{ $school_email }}" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow transition">+ Student Register</a>
 
 
         </div>

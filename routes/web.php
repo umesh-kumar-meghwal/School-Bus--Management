@@ -46,6 +46,10 @@ Route::get('/clear-all-cache', function() {
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/push',[UserPushController::class,'push']);
 Route::get('/pushed',[UserPushController::class,'pushed']);
+Route::get('/s-push',[UserPushController::class,'s_push']);
+Route::get('/s-pushed',[UserPushController::class,'s_pushed']);
+
+
 
 
 # Login Page Are the Login And Include----------------------------------------------------------------

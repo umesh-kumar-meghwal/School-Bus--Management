@@ -65,7 +65,57 @@ class UserPushController extends Controller
             ];
         }
         Notification::insert($notifications);
-        $msg = ["msg"=>"success"];
+        $msg = ["msg" => "success"];
+        return response()->json($msg);
+    }
+
+    public function s_push(Request $request)
+    {
+        $school_email = $request->shq;
+        $st_email = $request->sq;
+        return view('push', compact('school_email', 'st_email'));
+    }
+
+    public function student_push($st_email, $title, $body)
+    {
+        $appId = env('ONESIGNAL_APP_ID');
+        $restKey = env('ONESIGNAL_REST_API_KEY');
+        
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Basic ' . $restKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://onesignal.com/api/v1/notifications', [
+            'app_id' => $appId,
+            'include_external_user_ids' => $st_email,
+            'headings' => [
+                'en' => $title,
+            ],
+            'contents' => [
+                'en' => $body,
+            ],
+            'android_sound' => 'bus_horn',
+        ]);
+
+        return $response->json();
+    }
+
+    public function s_pushed(Request $request)
+    {
+        $school_email = $request->input('school_email');
+        $title = $request->input('title');
+        $body = $request->input('content');
+        $st_email = $request->input('st_email');
+        $decryptedSchoolEmail = Crypt::decryptString($school_email);
+        $decryptedStEmail = Crypt::decryptString($st_email);
+        $this->student_push($st_email, $title, $body);
+        Notification::created([
+            'title' => $title,
+            'content' => $body,
+            'school_email' => $decryptedSchoolEmail,
+            'user_email' => $decryptedStEmail
+        ]);
+        $msg = ["msg" => "success"];
         return response()->json($msg);
     }
 }
