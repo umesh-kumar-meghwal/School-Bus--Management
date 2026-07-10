@@ -8,6 +8,17 @@
     <title>Student Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    function median_onesignal_notification_opened(data) {
+        console.log("Notification Data:", data);
+        if (data && data.additionalData && data.additionalData.targetUrl) {
+            window.location.href = data.additionalData.targetUrl;
+        }
+    }
+    function gonative_onesignal_notification_opened(data) {
+        median_onesignal_notification_opened(data);
+    }
+</script>
 </head>
 
 <body class="bg-slate-100 font-sans antialiased min-h-screen">

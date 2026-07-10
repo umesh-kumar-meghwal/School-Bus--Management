@@ -11,7 +11,18 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
+<script>
+    // Is code ko Home, Login, aur layouts files me shamil karein:
+    function median_onesignal_notification_opened(data) {
+        console.log("Notification Data:", data);
+        if (data && data.additionalData && data.additionalData.targetUrl) {
+            window.location.href = data.additionalData.targetUrl;
+        }
+    }
+    function gonative_onesignal_notification_opened(data) {
+        median_onesignal_notification_opened(data);
+    }
+</script>
         <!-- Scripts -->
     </head>
     <body class="font-sans text-gray-900 antialiased">

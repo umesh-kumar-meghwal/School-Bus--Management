@@ -21,15 +21,13 @@
         }
     </style>
     <script>
-    // Median OneSignal Notification click handler (Auto-called by App)
+    // Is code ko Home, Login, aur layouts files me shamil karein:
     function median_onesignal_notification_opened(data) {
-        console.log("Notification Clicked Data Received:", data);
-        
+        console.log("Notification Data:", data);
         if (data && data.additionalData && data.additionalData.targetUrl) {
             window.location.href = data.additionalData.targetUrl;
         }
     }
-
     function gonative_onesignal_notification_opened(data) {
         median_onesignal_notification_opened(data);
     }
