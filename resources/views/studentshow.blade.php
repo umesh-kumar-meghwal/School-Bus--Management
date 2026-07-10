@@ -85,7 +85,7 @@
                                     </form>
 
                                     <a href="/s-push?sq={{ $d->email }}&shq={{ $school_email }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-medium transition shadow-sm">
-                                        Details
+                                        Push Notification
                                     </a>
 
 
