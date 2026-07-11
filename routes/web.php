@@ -54,7 +54,7 @@ Route::get('/notification',[UserPushController::class,'notification']);
 Route::get('/noti-count',[UserPushController::class,'noti_count']);
 Route::post('/delete-push',[UserPushController::class,'delete_push']);
 Route::get('/apk',[ApkController::class,'apk']);
-Route::get('/apk-upload',[ApkController::class,'apk_upload']);
+Route::post('/apk-upload',[ApkController::class,'apk_upload']);
 
 
 
