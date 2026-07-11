@@ -12,15 +12,7 @@
 <body class="bg-slate-50 font-sans antialiased min-h-screen flex flex-col justify-between">
     <!-- Temporary Debug Bar -->
 <div class="bg-gray-900 text-white p-4 text-xs space-y-1 relative z-[9999]">
-    <strong>Debug Information:</strong> <br>
-    1. Your Phone's User Agent: <span class="text-yellow-300">{{ request()->header('User-Agent') }}</span> <br>
-    2. Is MedianApp Detected?: 
-    <span class="font-bold {{ str_contains(request()->header('User-Agent'), 'MedianApp/') ? 'text-green-400' : 'text-red-400' }}">
-        {{ str_contains(request()->header('User-Agent'), 'MedianApp/') ? 'YES' : 'NO' }}
-    </span> <br>
-    3. Helper Check Output: 
-    <span class="text-blue-300">{{ json_encode(\App\Helpers\AppVersionHelper::checkUpdate()) }}</span>
-</div>
+
 
     <!-- Header Navigation -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
