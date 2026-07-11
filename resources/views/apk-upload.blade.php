@@ -1,14 +1,15 @@
 <h1>Apk File Upload </h1>
 
 <input type="file" name="apk" id="apk">
-<button onclick="myFunction()">Upload</button>
+<button id="upload">Upload</button>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script>
 
-    function myFunction()
-    {
-        let file = document.getElementById("apk")[0].files[0];
+    $("#upload").onclick(function(){
+
+    
+        let file = $("#apk")[0].files[0];
         let data = new FormData();
         data.append("file",file);
 
@@ -25,5 +26,5 @@
                 console.log(res);
             }
         })
-    }
+    })
 </script>
