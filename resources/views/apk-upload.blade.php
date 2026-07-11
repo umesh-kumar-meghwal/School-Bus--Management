@@ -115,7 +115,7 @@
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                 },
                 success: function(res) {
-                    showStatus("Success: " + res.success + " (" + res.filename + ")", "success");
+                    showStatus(res.success + res.filename );
                     $("#upload").prop("disabled", false);
                 },
                 error: function(xhr, status, error) {
