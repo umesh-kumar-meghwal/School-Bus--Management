@@ -37,6 +37,12 @@
                 <!-- Navigation Header -->
                 <h1 class="text-xl font-bold tracking-tight text-white mb-6">Admin Dashboard</h1>
             </div>
+                <div class="space-y-3">
+                    <button onclick="window.location.href='/apk'" class="w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 text-left transition duration-150">
+                        APK File Upload
+                    </button>
+                    </div>
+
 
             <!-- Logout Button -->
             <div class="pt-6 border-t border-slate-700">
