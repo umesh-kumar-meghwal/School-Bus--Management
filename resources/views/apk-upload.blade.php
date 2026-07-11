@@ -6,7 +6,7 @@
 
 <script>
 
-    $("#upload").onclick(function(){
+    $("#upload").click(function(){
 
     
         let file = $("#apk")[0].files[0];
