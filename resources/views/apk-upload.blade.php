@@ -16,7 +16,7 @@
 
         $.ajax({
             url:"/apk-upload",
-            type:"POST",
+            type:"GET",
             data:data,
             processData:false,
             contentType:false,
