@@ -1,5 +1,5 @@
 <h1>Apk File Upload </h1>
-
+<meta name="csrf-token" content="{{ csrf_tokne() }}">
 <input type="file" name="file" id="apk">
 <button id="upload">Upload</button>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
