@@ -17,9 +17,13 @@ class ApkController extends Controller
     {
         $file = $request->file('file');
         $file_name = $request->input('file_name');
+
+        if($file->getClientOriginalExtension()!="apk"){
+            return response()->json(['success'=>'only APK file Support ! ','filename'=>$file]);
+        }
         $name = $file_name.'.'.$file->getClientOriginalExtension();
-        if(file_exists($name)){
-            unlink($name);
+        if(file_exists($file)){
+            unlink($file);
         }
         $file->move(public_path('downloads'),$name);
         return response()->json(['success'=>'file upload successfully ','filename'=>$name]);

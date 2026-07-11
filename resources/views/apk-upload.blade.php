@@ -12,7 +12,7 @@
 
     
         let file = $("#apk")[0].files[0];
-        let file_name = $("#file_name").value;
+        let file_name = $("#file_name").val();
     
         let data = new FormData();
         data.append("file",file);
