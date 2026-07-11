@@ -11,26 +11,38 @@ class ApkController extends Controller
 {
     public function apk(Request $request)
     {
-        return view('apk-upload');
+        $email = session('user');
+        $usertype = session('usertype');
+        if (!empty($email) && $usertype == 'admin') {
+            return view('apk-upload');
+        } else {
+            return redirect('/error');
+        }
     }
     public function apk_upload(Request $request)
     {
-        $file = $request->file('file');
-        $file_name = $request->input('file_name');
+        $email = session('user');
+        $usertype = session('usertype');
+        if (!empty($email) && $usertype == 'admin') {
+            $file = $request->file('file');
+            $file_name = $request->input('file_name');
 
-        if (!$file) {
-            return response()->json(['success' => 'No File Found']);
-        }
+            if (!$file) {
+                return response()->json(['success' => 'No File Found']);
+            }
 
-        if ($file->getClientOriginalExtension() != "apk") {
-            return response()->json(['success' => 'only APK file Support ! ', 'filename' => "❌" . $file->getClientOriginalExtension()]);
-        }
-        $name = $file_name.'.' .$file->getClientOriginalExtension();
-        if(file_exists($name)){
-            unlink($name);
-        }
+            if ($file->getClientOriginalExtension() != "apk") {
+                return response()->json(['success' => 'only APK file Support ! ', 'filename' => "❌" . $file->getClientOriginalExtension()]);
+            }
+            $name = $file_name . '.' . $file->getClientOriginalExtension();
+            if (file_exists($name)) {
+                unlink($name);
+            }
 
-        $file->move(public_path('uploads'), $name);
-        return response()->json(['success' => 'file upload successfully ', 'filename' => $name]);
+            $file->move(public_path('uploads'), $name);
+            return response()->json(['success' => 'file upload successfully ', 'filename' => $name]);
+        } else {
+            return redirect('/error');
+        }
     }
 }
