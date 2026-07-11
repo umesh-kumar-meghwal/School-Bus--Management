@@ -55,9 +55,9 @@
                  <div class="hide-in-app my-4">
                     @foreach (File::files(public_path('uploads')) as $file)
         @if ($file->getExtension()=='apk')
-            <p>{{ asset('storage/uploads/'.$file->getFilename()) }}</p> {{-- uploads ki jagah storage/uploads --}}
+            <p>{{ asset('uploads/'.$file->getFilename()) }}</p> {{-- uploads ki jagah storage/uploads --}}
             
-            <a href="{{ asset('storage/uploads/'.$file->getFilename()) }}" {{-- yaha bhi --}}
+            <a href="{{ asset('uploads/'.$file->getFilename()) }}" {{-- yaha bhi --}}
                 download
                 class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/35 transition duration-150 transform hover:-translate-y-0.5">
                 
