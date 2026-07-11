@@ -39,17 +39,14 @@
             <!-- Actions -->
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <!-- Download Button -->
-                <a href="{{ $updateInfo['download_url'] }}" 
+                <a href="{{ str_replace('http://', 'https://',$updateInfo['download_url']) }}" 
                    style="display: block; width: 100%; background: #D48C45; color: #ffffff; text-decoration: none; font-weight: bold; padding: 13px; border-radius: 14px; font-size: 15px; border: none; box-shadow: 0 4px 12px rgba(212,140,69,0.3); text-align: center; box-sizing: border-box; transition: background 0.2s;">
                     Update Now
                 </a>
                 
                 <!-- Optional Later Button -->
                 @if(!$updateInfo['is_force'])
-                    <button onclick="document.getElementById('update-modal-overlay').style.display='none'" 
-                            style="display: block; margin: 8px auto 0; background: none; border: none; color: #999; font-size: 12px; font-weight: bold; text-transform: uppercase; cursor: pointer; letter-spacing: 0.5px;">
-                        Maybe Later
-                    </button>
+                    
                 @endif
             </div>
         </div>
