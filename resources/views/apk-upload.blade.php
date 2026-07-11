@@ -12,6 +12,7 @@
         let file = $("#apk")[0].files[0];
         let data = new FormData();
         data.append("file",file);
+        console.log(file,data);
 
         $.ajax({
             url:"/apk-upload",
@@ -24,6 +25,12 @@
             },
             success:function(res){
                 console.log(res);
+            },
+            error:function(xhr,status,error){
+                console.log("status:",status);
+                console.log("Error:",error);
+                console.log("Response:",xhr.responseText);
+                alert("Something went wrong");
             }
         })
     })

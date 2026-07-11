@@ -16,11 +16,8 @@ class ApkController extends Controller
     public function apk_upload(Request $request)
     {
         $file = $request->file('file');
-        $name = public_path('downloads').'transitflow'.'.'.$file->getClientOriginalExtension();
-        if(file_exists($name)){
-            unlink($name);
-        }
-        $file->move($name);
+        $name = 'transitflow'.'.'.$file->getClientOriginalExtension();
+        $file->move(public_path('downloads'),$name);
         return response()->json(['success'=>true,'filename'=>$name]);
     }
 }
