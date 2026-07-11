@@ -32,6 +32,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolShowController;
 use App\Http\Controller\BestController;
 use App\Http\Controllers\UserPushController;
+use App\Http\Controllers\ApkController;
 use Illuminate\Support\Facades\Artisan;
 
 
@@ -52,6 +53,8 @@ Route::get('/hh',[UserPushController::class,'hh']);
 Route::get('/notification',[UserPushController::class,'notification']);
 Route::get('/noti-count',[UserPushController::class,'noti_count']);
 Route::post('/delete-push',[UserPushController::class,'delete_push']);
+Route::get('/apk',[ApkController::class,'apk']);
+Route::get('/apk-upload',[ApkController::class,'apk-upload']);
 
 
 
