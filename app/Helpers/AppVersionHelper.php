@@ -8,7 +8,7 @@ class AppVersionHelper
 {
     public static function checkUpdate()
     {
-        $userAgent = 'MedianApp/1.0';
+        $userAgent = request()->header('User-Agent');
         
         if (str_contains($userAgent, 'MedianApp/')) {
             preg_match('/MedianApp\/([0-9.]+)/', $userAgent, $matches);
