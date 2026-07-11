@@ -55,6 +55,7 @@
                  <div class="hide-in-app my-4">
                     @foreach (File::files(public_path('uploads')) as $file)
                     @if ($file->getExtension()=='apk')
+                    <P>{{ asset('uploads/'.$file->getFilename()) }}</P>
 <a
                     href="{{ asset('uploads/'.$file->getFilename()) }}"
                     download
