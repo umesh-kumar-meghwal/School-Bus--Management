@@ -29,6 +29,9 @@
 
     <div class="w-full max-w-md bg-white rounded-3xl shadow-xl border border-brandBrown/5 p-8 lg:p-10">
         <!-- Icon & Header -->
+         <button onclick="history.back()" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition duration-200 mb-8">
+                    ← Back
+                </button>
         <div class="text-center mb-8">
             <div class="w-16 h-16 bg-brandOrange/10 rounded-full flex items-center justify-center mx-auto mb-4 text-brandOrange">
                 <!-- SVG Upload Icon -->

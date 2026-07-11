@@ -56,7 +56,7 @@
                     @foreach (File::files(public_path('uploads')) as $file)
                     @if ($file->getExtension()=='apk')
 <a
-                    href="https://school-bus-tracking-management.up.railway.app/{{ asset('uploads/'.$file->getFilename()) }}"
+                    href="{{ asset('uploads/'.$file->getFilename()) }}"
                     download
                     class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/35 transition duration-150 transform hover:-translate-y-0.5">
                     <svg class="h-5 w-5 text-white animate-bounce" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
