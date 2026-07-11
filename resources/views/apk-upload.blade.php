@@ -9,7 +9,8 @@
 <script>
 
     $("#upload").click(function(){
-
+        document.getElementById("show").innerHTML="process.....";
+        $("#upload").prop("disabled",true);
     
         let file = $("#apk")[0].files[0];
         let file_name = $("#file_name").val();
