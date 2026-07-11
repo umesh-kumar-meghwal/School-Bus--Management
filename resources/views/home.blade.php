@@ -57,7 +57,7 @@
         @if ($file->getExtension()=='apk')
             <p>{{ asset('uploads/'.$file->getFilename()) }}</p> {{-- uploads ki jagah storage/uploads --}}
             
-            <a href="{{ asset('uploads/'.$file->getFilename()) }}" {{-- yaha bhi --}}
+            <a href="{{ str_replace('http://', 'https://', asset('uploads/'.$file->getFilename())) }}" {{-- yaha bhi --}}
                 download
                 class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/35 transition duration-150 transform hover:-translate-y-0.5">
                 
