@@ -101,6 +101,37 @@
 </head>
 
 <body class="font-sans antialiased">
+    @php
+    $updateInfo = \App\Helpers\AppVersionHelper::checkUpdate();
+@endphp
+
+@if($updateInfo['needs_update'])
+    <!-- Beautiful Tailwind Modal overlay for update -->
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl border border-gray-100">
+            <div class="w-16 h-16 bg-[#D48C45]/10 rounded-full flex items-center justify-center mx-auto mb-4 text-[#D48C45]">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[#4A2E2B] font-serif">New Update Available</h2>
+            <p class="text-sm text-gray-500 mt-2 mb-6">A new version of our app is available. Update now to enjoy the latest features without losing your session data.</p>
+            
+            <div class="space-y-3">
+                <a href="{{ $updateInfo['download_url'] }}" 
+                   class="block w-full bg-[#D48C45] hover:bg-[#4A2E2B] text-white font-bold py-3.5 rounded-2xl shadow-lg transition-all duration-300">
+                    Update Now
+                </a>
+                
+                @if(!$updateInfo['is_force'])
+                    <button onclick="this.closest('.fixed').style.display='none'" class="text-xs text-gray-400 hover:text-gray-600 font-semibold uppercase tracking-wider block mx-auto mt-2">
+                        Maybe Later
+                    </button>
+                @endif
+            </div>
+        </div>
+    </div>
+@endif
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
 
