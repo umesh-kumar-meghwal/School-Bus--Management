@@ -10,7 +10,15 @@
 </head>
 
 
+@php
+    $updateInfo = \App\Helpers\AppVersionHelper::checkUpdate();
+@endphp
 
+<!-- लाल पट्टी जांचने के लिए -->
+<div style="background: red; color: white; padding: 12px; text-align: center; font-size: 11px; font-weight: bold; position: relative; z-index: 999999;">
+    [DIAGNOSTIC] welcome.blade.php Loaded. <br>
+    Needs Update Output: {{ json_encode($updateInfo) }}
+</div>
     <!-- Header Navigation -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
