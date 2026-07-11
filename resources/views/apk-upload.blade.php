@@ -61,7 +61,7 @@
                         <p class="text-xs text-gray-400 mt-1">Only .apk files allowed</p>
                     </div>
                     <!-- Hidden real file input -->
-                    <input type="file" name="file" id="apk" class="hidden" accept=".apk">
+                    <input type="file" name="file" id="apk" class="hidden"  >
                 </label>
             </div>
 
