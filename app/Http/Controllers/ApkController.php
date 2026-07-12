@@ -5,6 +5,7 @@ namespace  App\Http\Controllers;
 use App\Models\App_updates;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\File;
 
 
 
@@ -37,14 +38,23 @@ class ApkController extends Controller
                 return response()->json(['success' => 'only APK file Support ! ', 'filename' => "❌" . $file->getClientOriginalExtension()]);
             }
             $name = $file_name . '.' . $file->getClientOriginalExtension();
-            if (file_exists($name)) {
-                unlink($name);
+            $path = public_path('uploads');
+            $deleted = [];
+            if (File::exists($path)) {
+                $files = File::files($path);
+                foreach ($files as $file) {
+                    if ($file->getExtension() == 'apk') {
+                        unlink($file->getPathname());
+                        $deleted[] = $file->getFilename();
+                    }
+                }
             }
 
+
             $file->move(public_path('uploads'), $name);
-            App_updates::where('id',1)->update([
-                'latest_version'=>$apk_version,
-                'apk_path'=>'uploads/'.$name
+            App_updates::where('id', 1)->update([
+                'latest_version' => $apk_version,
+                'apk_path' => 'uploads/' . $name
             ]);
             return response()->json(['success' => 'file upload successfully ', 'filename' => $name]);
         } else {
