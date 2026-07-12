@@ -38,18 +38,17 @@ class ApkController extends Controller
                 return response()->json(['success' => 'only APK file Support ! ', 'filename' => "❌" . $file->getClientOriginalExtension()]);
             }
             $path = public_path('uploads');
-            $name = $file_name . '.' . $file->getClientOriginalExtension();
 
-            if (!File::exists($path)) {
-                File::makeDirectory($path, 0777, true);
-            }
+            
 
-            $files = File::files($path);
-            foreach ($files as $old) {
-                if ($old->getExtension() == 'apk') {
-                    File::delete($old->getFilename());
+             if(File::exists($path)){
+            foreach (File::files($path) as $oldFile) {
+                if ($oldFile->getExtension() == 'apk') {
+                    File::delete($oldFile->getPathname());
                 }
             }
+             }
+            $name = $file_name . '.apk';
 
 
             $file->move($path, $name);
