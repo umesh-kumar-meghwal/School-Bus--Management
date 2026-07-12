@@ -37,21 +37,22 @@ class ApkController extends Controller
             if ($file->getClientOriginalExtension() != "apk") {
                 return response()->json(['success' => 'only APK file Support ! ', 'filename' => "❌" . $file->getClientOriginalExtension()]);
             }
-            $name = $file_name . '.' . $file->getClientOriginalExtension();
             $path = public_path('uploads');
-            $deleted = [];
-            if (File::exists($path)) {
-                $files = File::files($path);
-                foreach ($files as $file) {
-                    if ($file->getExtension() == 'apk') {
-                        unlink($file->getPathname());
-                        $deleted[] = $file->getFilename();
-                    }
+            $name = $file_name . '.' . $file->getClientOriginalExtension();
+
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0777, true);
+            }
+
+            $files = File::files($path);
+            foreach ($files as $file) {
+                if ($file->getExtension() == 'apk') {
+                    File::delete($file->getFilename());
                 }
             }
 
 
-            $file->move(public_path('uploads'), $name);
+            $file->move($path, $name);
             App_updates::where('id', 1)->update([
                 'latest_version' => $apk_version,
                 'apk_path' => 'uploads/' . $name
