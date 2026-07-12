@@ -45,9 +45,9 @@ class ApkController extends Controller
             }
 
             $files = File::files($path);
-            foreach ($files as $file) {
-                if ($file->getExtension() == 'apk') {
-                    File::delete($file->getFilename());
+            foreach ($files as $old) {
+                if ($old->getExtension() == 'apk') {
+                    File::delete($old->getFilename());
                 }
             }
 
