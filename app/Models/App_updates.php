@@ -12,6 +12,6 @@ class App_updates extends Model
     protected $fillable = [
         'latest_version',
         'apk_path',
-        'is_force',
+        'is_force'
     ];
 }
