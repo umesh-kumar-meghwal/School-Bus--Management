@@ -92,11 +92,10 @@
 
     <script>
         // Update label text when a file is selected
-        $("#apk_version").keyup(function(){
-            let val = this.val();
-            alert("dd");
-
-        })
+        document.getElementById("apk_version").addEventListener("keyup",function(){
+            alert(this.value);
+            
+        });
         $("#apk").change(function() {
             let filename = this.files[0] ? this.files[0].name : "Click to browse or drag file here";
             $("#file-label-text").text(filename).addClass("text-brandOrange font-semibold");
