@@ -92,7 +92,7 @@
 
     <script>
         // Update label text when a file is selected
-        $("$apk_version").keyup(function(){
+        $("#apk_version").keyup(function(){
             let val = this.val();
             alert("dd");
 
