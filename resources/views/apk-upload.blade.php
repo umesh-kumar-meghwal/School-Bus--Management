@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>APK File Upload</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -56,7 +57,8 @@
                 <label for="apk_version" class="block text-sm font-semibold text-brandBrown mb-2">App version</label>
                 <input type="text" name="apk_version" id="apk_version" placeholder="Enter custom App Version e.g:1.0" 
                        class="w-full bg-brandCream/40 border border-brandBrown/10 rounded-2xl px-5 py-3.5 text-brandBrown placeholder-gray-400 focus:outline-none focus:border-brandOrange focus:ring-1 focus:ring-brandOrange transition-all duration-200">
-            </div>
+                       <span id="show"></span>
+                    </div>
 
 
             <!-- Custom Designed File Upload Area -->
@@ -93,7 +95,17 @@
     <script>
         // Update label text when a file is selected
         document.getElementById("apk_version").addEventListener("keyup",function(){
-            alert(this.value);
+            $.ajax({
+                url:"/version-check",
+                type:"GET",
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    apk_version : this.value
+                },
+                success:function(data){
+                    document.getElementById("show").innerHTML=data.msg;
+                }
+            })
             
         });
         $("#apk").change(function() {

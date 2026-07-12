@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddBusController;
 use App\Http\Controllers\BusDetailsController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\StudentEditController;
 use App\Http\Controllers\StudentDeleteController;
 use App\Http\Controllers\StudentShowController;
@@ -33,7 +34,9 @@ use App\Http\Controllers\SchoolShowController;
 use App\Http\Controller\BestController;
 use App\Http\Controllers\UserPushController;
 use App\Http\Controllers\ApkController;
+use App\Models\App_updates;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Request;
 
 
 # Index home Page Are Show in the Front of project------------------------------------------------------
@@ -43,6 +46,14 @@ Route::get('/clear-all-cache', function() {
     Artisan::call('cache:clear');
     Artisan::call('view:clear');
     return "Railway Laravel Cache Cleared successfully!";
+});
+Route::get('/version-check',function(Request $request){
+    $apk_ver = $request->input('apk_version');
+    $check = DB::table('app_updates')->where('latest_version',$apk_ver)->first();
+    if(!$check){
+        return response()->json(['success'=>'already exist']);
+    }
+
 });
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/push',[UserPushController::class,'push']);

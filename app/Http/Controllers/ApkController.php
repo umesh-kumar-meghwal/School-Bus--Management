@@ -47,4 +47,5 @@ class ApkController extends Controller
             return redirect('/error');
         }
     }
+    
 }
