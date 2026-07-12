@@ -51,7 +51,7 @@ Route::get('/version-check',function(Request $request){
     $apk_ver = $request->input('apk_version');
     $check = DB::table('app_updates')->where('latest_version',$apk_ver)->first();
     if(!$check){
-        return response()->json(['success'=>'already exist']);
+        return response()->json(['msg'=>'already exist']);
     }
 
 });
