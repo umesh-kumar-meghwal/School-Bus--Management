@@ -50,7 +50,7 @@ Route::get('/clear-all-cache', function() {
 Route::get('/version-check',function(Request $request){
     $apk_ver = $request->input('apk_version');
     $check = DB::table('app_updates')->where('latest_version',$apk_ver)->get();
-    if(isset($check)){
+    if(!isset($check)){
         return response()->json(['msg'=>'already exist']);
     }else{
         return response()->json(['msg'=>'']);
