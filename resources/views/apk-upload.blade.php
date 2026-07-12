@@ -52,6 +52,13 @@
                        class="w-full bg-brandCream/40 border border-brandBrown/10 rounded-2xl px-5 py-3.5 text-brandBrown placeholder-gray-400 focus:outline-none focus:border-brandOrange focus:ring-1 focus:ring-brandOrange transition-all duration-200">
             </div>
 
+             <div>
+                <label for="apk_version" class="block text-sm font-semibold text-brandBrown mb-2">App version</label>
+                <input type="text" name="apk_version" id="apk_version" placeholder="Enter custom App Version e.g:1.0" 
+                       class="w-full bg-brandCream/40 border border-brandBrown/10 rounded-2xl px-5 py-3.5 text-brandBrown placeholder-gray-400 focus:outline-none focus:border-brandOrange focus:ring-1 focus:ring-brandOrange transition-all duration-200">
+            </div>
+
+
             <!-- Custom Designed File Upload Area -->
             <div>
                 <label class="block text-sm font-semibold text-brandBrown mb-2">Select APK File</label>
@@ -85,6 +92,11 @@
 
     <script>
         // Update label text when a file is selected
+        $("$apk_version").keyup(function(){
+            let val = this.val();
+            alert("dd");
+
+        })
         $("#apk").change(function() {
             let filename = this.files[0] ? this.files[0].name : "Click to browse or drag file here";
             $("#file-label-text").text(filename).addClass("text-brandOrange font-semibold");

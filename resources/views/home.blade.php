@@ -9,7 +9,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<!-- 1. Diagnostic Bar (इसे टेस्ट पूरा होने के बाद हटा सकते हैं) -->
 @php
     $updateInfo = \App\Helpers\AppVersionHelper::checkUpdate();
 @endphp

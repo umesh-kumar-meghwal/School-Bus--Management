@@ -10,6 +10,49 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 font-sans antialiased min-h-screen">
+    
+@php
+    $updateInfo = \App\Helpers\AppVersionHelper::checkUpdate();
+@endphp
+
+@if($updateInfo['needs_update'])
+    <!-- Beautiful Inline-CSS Styled Modal (Guaranteed to show up) -->
+    <div id="update-modal-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.65); display: flex; align-items: center; justify-content: center; z-index: 9999999; padding: 15px; font-family: 'Quicksand', sans-serif; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
+        <div style="background: #ffffff; border-radius: 24px; padding: 30px; max-width: 340px; width: 100%; text-align: center; box-shadow: 0 15px 35px rgba(74, 46, 43, 0.15); border: 1px solid rgba(74, 46, 43, 0.05); box-sizing: border-box;">
+            
+            <!-- Beautiful Round Icon Wrap -->
+            <div style="width: 60px; height: 60px; background: rgba(212, 140, 69, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                <svg style="width: 28px; height: 28px; fill: none; stroke: #D48C45;" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+            </div>
+
+            <!-- Title -->
+            <h2 style="font-size: 22px; font-weight: bold; color: #4A2E2B; margin-bottom: 10px; margin-top: 0; font-family: inherit;">
+                New Update Available
+            </h2>
+            
+            <!-- Description -->
+            <p style="font-size: 13.5px; color: #665; line-height: 1.5; margin-bottom: 25px; margin-top: 0; font-family: inherit;">
+                A new version of our app is available. Update now to enjoy the latest features without losing your session data.
+            </p>
+            
+            <!-- Actions -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- Download Button -->
+                <a href="{{ str_replace('http://', 'https://',$updateInfo['download_url']) }}" 
+                   style="display: block; width: 100%; background: #D48C45; color: #ffffff; text-decoration: none; font-weight: bold; padding: 13px; border-radius: 14px; font-size: 15px; border: none; box-shadow: 0 4px 12px rgba(212,140,69,0.3); text-align: center; box-sizing: border-box; transition: background 0.2s;">
+                    Update Now
+                </a>
+                
+                <!-- Optional Later Button -->
+                @if(!$updateInfo['is_force'])
+                    
+                @endif
+            </div>
+        </div>
+    </div>
+@endif
 
     @if ($data)
     <div class="flex flex-col lg:flex-row min-h-screen">
