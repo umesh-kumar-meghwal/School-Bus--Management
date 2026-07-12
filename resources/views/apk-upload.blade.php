@@ -116,6 +116,7 @@
         $("#upload").click(function() {
             let file = $("#apk")[0].files[0];
             let file_name = $("#file_name").val();
+            let apk_version = $("#apk_version").val();
 
             // validation checks before sending request
             if (!file) {
@@ -130,6 +131,7 @@
             let data = new FormData();
             data.append("file", file);
             data.append("file_name", file_name);
+            data.append("apk_version",apk_version);
 
             $.ajax({
                 url: "/apk-upload",
