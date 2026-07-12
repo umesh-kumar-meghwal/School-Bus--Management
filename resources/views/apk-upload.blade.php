@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -20,19 +21,22 @@
                         brandOrange: '#D48C45',
                         brandLightOrange: '#EADBC8',
                     },
-                    fontFamily: { sans: ['Quicksand', 'sans-serif'] }
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif']
+                    }
                 }
             }
         }
     </script>
 </head>
+
 <body class="bg-brandCream font-sans min-h-screen flex items-center justify-center p-6">
 
     <div class="w-full max-w-md bg-white rounded-3xl shadow-xl border border-brandBrown/5 p-8 lg:p-10">
         <!-- Icon & Header -->
-         <button onclick="history.back()" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition duration-200 mb-8">
-                    ← Back
-                </button>
+        <button onclick="history.back()" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition duration-200 mb-8">
+            ← Back
+        </button>
         <div class="text-center mb-8">
             <div class="w-16 h-16 bg-brandOrange/10 rounded-full flex items-center justify-center mx-auto mb-4 text-brandOrange">
                 <!-- SVG Upload Icon -->
@@ -49,16 +53,16 @@
             <!-- File Name Input -->
             <div>
                 <label for="file_name" class="block text-sm font-semibold text-brandBrown mb-2">APK File Name</label>
-                <input type="text" name="file_name" id="file_name" placeholder="Enter custom filename" 
-                       class="w-full bg-brandCream/40 border border-brandBrown/10 rounded-2xl px-5 py-3.5 text-brandBrown placeholder-gray-400 focus:outline-none focus:border-brandOrange focus:ring-1 focus:ring-brandOrange transition-all duration-200">
+                <input type="text" name="file_name" id="file_name" placeholder="Enter custom filename"
+                    class="w-full bg-brandCream/40 border border-brandBrown/10 rounded-2xl px-5 py-3.5 text-brandBrown placeholder-gray-400 focus:outline-none focus:border-brandOrange focus:ring-1 focus:ring-brandOrange transition-all duration-200">
             </div>
 
-             <div>
+            <div>
                 <label for="apk_version" class="block text-sm font-semibold text-brandBrown mb-2">App version</label>
-                <input type="text" name="apk_version" id="apk_version" placeholder="Enter custom App Version e.g:1.0" 
-                       class="w-full bg-brandCream/40 border border-brandBrown/10 rounded-2xl px-5 py-3.5 text-brandBrown placeholder-gray-400 focus:outline-none focus:border-brandOrange focus:ring-1 focus:ring-brandOrange transition-all duration-200">
-                       <span id="show2"></span>
-                    </div>
+                <input type="text" name="apk_version" id="apk_version" placeholder="Enter custom App Version e.g:1.0"
+                    class="w-full bg-brandCream/40 border border-brandBrown/10 rounded-2xl px-5 py-3.5 text-brandBrown placeholder-gray-400 focus:outline-none focus:border-brandOrange focus:ring-1 focus:ring-brandOrange transition-all duration-200">
+                <span id="show2"></span>
+            </div>
 
 
             <!-- Custom Designed File Upload Area -->
@@ -73,7 +77,7 @@
                         <p class="text-xs text-gray-400 mt-1">Only .apk files allowed</p>
                     </div>
                     <!-- Hidden real file input -->
-                    <input type="file" name="file" id="apk" class="hidden"  >
+                    <input type="file" name="file" id="apk" class="hidden">
                 </label>
             </div>
 
@@ -94,19 +98,22 @@
 
     <script>
         // Update label text when a file is selected
-        document.getElementById("apk_version").addEventListener("keyup",function(){
+        document.getElementById("apk_version").addEventListener("keyup", function() {
             $.ajax({
-                url:"/version-check",
-                type:"GET",
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    apk_version : this.value
+                url: "/version-check",
+                type: "GET",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    apk_version: this.value
                 },
-                success:function(data){
-                    document.getElementById("show2").innerHTML=data.msg;
+                success: function(data) {
+                    document.getElementById("show2").innerHTML = data.msg;
+                    if (data.msg == "App Version Already Exists") {
+                        $("#upload").prop("disabled", true);
+                    }
                 }
             })
-            
+
         });
         $("#apk").change(function() {
             let filename = this.files[0] ? this.files[0].name : "Click to browse or drag file here";
@@ -131,7 +138,7 @@
             let data = new FormData();
             data.append("file", file);
             data.append("file_name", file_name);
-            data.append("apk_version",apk_version);
+            data.append("apk_version", apk_version);
 
             $.ajax({
                 url: "/apk-upload",
@@ -143,7 +150,7 @@
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                 },
                 success: function(res) {
-                    showStatus(res.success + res.filename );
+                    showStatus(res.success + res.filename);
                     $("#upload").prop("disabled", false);
                 },
                 error: function(xhr, status, error) {
@@ -160,7 +167,7 @@
         function showStatus(message, type) {
             let statusBox = $("#status-box");
             let showElem = $("#show");
-            
+
             statusBox.removeClass("hidden bg-blue-50 text-blue-700 bg-green-50 text-green-700 bg-red-50 text-red-700");
             showElem.text(message);
 
@@ -175,4 +182,5 @@
         }
     </script>
 </body>
+
 </html>
