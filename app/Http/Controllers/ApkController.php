@@ -27,7 +27,7 @@ class ApkController extends Controller
         if (!empty($email) && $usertype == 'admin') {
             $file = $request->file('file');
             $file_name = $request->input('file_name');
-            
+
 
             if (!$file) {
                 return response()->json(['success' => 'No File Found']);
@@ -41,12 +41,7 @@ class ApkController extends Controller
                 unlink($name);
             }
 
-            $file->move(public_path('uploads'), $name);
-            App_updates::create([
-                'latest_version'=>,
-                'apk_path',
-                'is_force',
-            ])
+            
             return response()->json(['success' => 'file upload successfully ', 'filename' => $name]);
         } else {
             return redirect('/error');
